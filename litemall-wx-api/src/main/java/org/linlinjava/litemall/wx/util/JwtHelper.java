@@ -23,15 +23,15 @@ public class JwtHelper {
 	static final String SUBJECT = "this is litemall token";
 	// 签名的观众
 	static final String AUDIENCE = "MINIAPP";
-	
-	
+
+
 	public String createToken(Integer userId){
 		try {
 		    Algorithm algorithm = Algorithm.HMAC256(SECRET);
 		    Map<String, Object> map = new HashMap<String, Object>();
 		    Date nowDate = new Date();
 		    // 过期时间：2小时
-		    Date expireDate = getAfterDate(nowDate,0,0,0,2,0,0);
+		    Date expireDate = getAfterDate(nowDate,100,0,0,0,0,0);
 	        map.put("alg", "HS256");
 	        map.put("typ", "JWT");
 		    String token = JWT.create()
@@ -42,9 +42,9 @@ public class JwtHelper {
 		        .withIssuer(ISSUSER)
 		        .withSubject(SUBJECT)
 		        .withAudience(AUDIENCE)
-		        // 生成签名的时间 
+		        // 生成签名的时间
 		        .withIssuedAt(nowDate)
-		        // 签名过期的时间 
+		        // 签名过期的时间
 		        .withExpiresAt(expireDate)
 		        // 签名 Signature
 		        .sign(algorithm);
@@ -54,7 +54,7 @@ public class JwtHelper {
 		}
 		return null;
 	}
-	
+
 	public Integer verifyTokenAndGetUserId(String token) {
 		try {
 		    Algorithm algorithm = Algorithm.HMAC256(SECRET);
@@ -68,17 +68,17 @@ public class JwtHelper {
 		} catch (JWTVerificationException exception){
 //			exception.printStackTrace();
 		}
-		
+
 		return 0;
 	}
-	
+
 	public  Date getAfterDate(Date date, int year, int month, int day, int hour, int minute, int second){
 		if(date == null){
 			date = new Date();
 		}
-		
+
 		Calendar cal = new GregorianCalendar();
-		
+
 		cal.setTime(date);
 		if(year != 0){
 			cal.add(Calendar.YEAR, year);
@@ -100,5 +100,5 @@ public class JwtHelper {
 		}
 		return cal.getTime();
 	}
-	
+
 }

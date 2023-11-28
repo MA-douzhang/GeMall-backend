@@ -1069,4 +1069,47 @@ public class WxOrderService {
             couponUserService.update(couponUser);
         }
     }
+
+    public Object pay(Integer userId, String body) {
+        if (userId == null) {
+            return ResponseUtil.unlogin();
+        }
+        Integer orderId = JacksonUtil.parseInteger(body, "orderId");
+        if (orderId == null) {
+            return ResponseUtil.badArgument();
+        }
+
+        LitemallOrder order = orderService.findById(userId, orderId);
+        if (order == null) {
+            return ResponseUtil.badArgumentValue();
+        }
+        if (!order.getUserId().equals(userId)) {
+            return ResponseUtil.badArgumentValue();
+        }
+
+        // 检测是否能够取消
+        OrderHandleOption handleOption = OrderUtil.build(order);
+        if (!handleOption.isPay()) {
+            return ResponseUtil.fail(ORDER_INVALID_OPERATION, "订单不能支付");
+        }
+
+        LitemallUser user = userService.findById(userId);
+        String openid = user.getWeixinOpenid();
+        if (openid == null) {
+            return ResponseUtil.fail(AUTH_OPENID_UNACCESS, "订单不能支付");
+        }
+        try {
+            BigDecimal actualPrice = order.getActualPrice();
+            order.setActualPrice(actualPrice);
+            order.setOrderStatus(OrderUtil.STATUS_PAY);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseUtil.fail(ORDER_PAY_FAIL, "订单不能支付");
+        }
+
+        if (orderService.updateWithOptimisticLocker(order) == 0) {
+            return ResponseUtil.updatedDateExpired();
+        }
+        return ResponseUtil.ok();
+    }
 }

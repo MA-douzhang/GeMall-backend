@@ -81,6 +81,16 @@ public class WxOrderController {
     }
 
     /**
+     * 模拟支付
+     * @param body
+     * @return
+     */
+    @PostMapping("pay")
+    public Object pay(@LoginUser Integer userId,@RequestBody String body) {
+        return wxOrderService.pay(userId,body);
+    }
+
+    /**
      * 付款订单的预支付会话标识
      *
      * @param userId 用户ID
