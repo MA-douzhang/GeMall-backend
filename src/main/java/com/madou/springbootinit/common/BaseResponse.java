@@ -15,7 +15,7 @@ public class BaseResponse<T> implements Serializable {
     /**
      * 响应码
      */
-    private int code;
+    private int errno;
 
     /**
      * 返回数据
@@ -25,12 +25,12 @@ public class BaseResponse<T> implements Serializable {
     /**
      * 返回信息
      */
-    private String message;
+    private String errmsg;
 
     public BaseResponse(int code, T data, String message) {
-        this.code = code;
+        this.errno = code;
         this.data = data;
-        this.message = message;
+        this.errmsg = message;
     }
 
     public BaseResponse(int code, T data) {

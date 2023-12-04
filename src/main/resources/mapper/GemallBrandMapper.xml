@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.madou.springbootinit.mapper.GemallBrandMapper">
+
+    <resultMap id="BaseResultMap" type="com.madou.springbootinit.model.entity.GemallBrand">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="desc" column="desc" jdbcType="VARCHAR"/>
+            <result property="picUrl" column="pic_url" jdbcType="VARCHAR"/>
+            <result property="sortOrder" column="sort_order" jdbcType="TINYINT"/>
+            <result property="floorPrice" column="floor_price" jdbcType="DECIMAL"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,desc,
+        pic_url,sort_order,floor_price,
+        add_time,update_time,deleted
+    </sql>
+</mapper>

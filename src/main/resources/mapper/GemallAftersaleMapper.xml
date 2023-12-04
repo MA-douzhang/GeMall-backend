@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.madou.springbootinit.mapper.GemallAftersaleMapper">
+
+    <resultMap id="BaseResultMap" type="com.madou.springbootinit.model.entity.GemallAftersale">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="aftersaleSn" column="aftersale_sn" jdbcType="VARCHAR"/>
+            <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="type" column="type" jdbcType="SMALLINT"/>
+            <result property="reason" column="reason" jdbcType="VARCHAR"/>
+            <result property="amount" column="amount" jdbcType="DECIMAL"/>
+            <result property="pictures" column="pictures" jdbcType="VARCHAR"/>
+            <result property="comment" column="comment" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="SMALLINT"/>
+            <result property="handleTime" column="handle_time" jdbcType="TIMESTAMP"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,aftersale_sn,order_id,
+        user_id,type,reason,
+        amount,pictures,comment,
+        status,handle_time,add_time,
+        update_time,deleted
+    </sql>
+</mapper>

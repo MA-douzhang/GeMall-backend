@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.madou.springbootinit.mapper.GemallGrouponMapper">
+
+    <resultMap id="BaseResultMap" type="com.madou.springbootinit.model.entity.GemallGroupon">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+            <result property="grouponId" column="groupon_id" jdbcType="INTEGER"/>
+            <result property="rulesId" column="rules_id" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="shareUrl" column="share_url" jdbcType="VARCHAR"/>
+            <result property="creatorUserId" column="creator_user_id" jdbcType="INTEGER"/>
+            <result property="creatorUserTime" column="creator_user_time" jdbcType="TIMESTAMP"/>
+            <result property="status" column="status" jdbcType="SMALLINT"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,order_id,groupon_id,
+        rules_id,user_id,share_url,
+        creator_user_id,creator_user_time,status,
+        add_time,update_time,deleted
+    </sql>
+</mapper>

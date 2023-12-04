@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.madou.springbootinit.mapper.GemallCommentMapper">
+
+    <resultMap id="BaseResultMap" type="com.madou.springbootinit.model.entity.GemallComment">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="valueId" column="value_id" jdbcType="INTEGER"/>
+            <result property="type" column="type" jdbcType="TINYINT"/>
+            <result property="content" column="content" jdbcType="VARCHAR"/>
+            <result property="adminContent" column="admin_content" jdbcType="VARCHAR"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="hasPicture" column="has_picture" jdbcType="TINYINT"/>
+            <result property="picUrls" column="pic_urls" jdbcType="VARCHAR"/>
+            <result property="star" column="star" jdbcType="SMALLINT"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,value_id,type,
+        content,admin_content,user_id,
+        has_picture,pic_urls,star,
+        add_time,update_time,deleted
+    </sql>
+</mapper>

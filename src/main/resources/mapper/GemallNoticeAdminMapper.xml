@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.madou.springbootinit.mapper.GemallNoticeAdminMapper">
+
+    <resultMap id="BaseResultMap" type="com.madou.springbootinit.model.entity.GemallNoticeAdmin">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="noticeId" column="notice_id" jdbcType="INTEGER"/>
+            <result property="noticeTitle" column="notice_title" jdbcType="VARCHAR"/>
+            <result property="adminId" column="admin_id" jdbcType="INTEGER"/>
+            <result property="readTime" column="read_time" jdbcType="TIMESTAMP"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,notice_id,notice_title,
+        admin_id,read_time,add_time,
+        update_time,deleted
+    </sql>
+</mapper>

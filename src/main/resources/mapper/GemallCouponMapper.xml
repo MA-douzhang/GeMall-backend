@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.madou.springbootinit.mapper.GemallCouponMapper">
+
+    <resultMap id="BaseResultMap" type="com.madou.springbootinit.model.entity.GemallCoupon">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="name" column="name" jdbcType="VARCHAR"/>
+            <result property="desc" column="desc" jdbcType="VARCHAR"/>
+            <result property="tag" column="tag" jdbcType="VARCHAR"/>
+            <result property="total" column="total" jdbcType="INTEGER"/>
+            <result property="discount" column="discount" jdbcType="DECIMAL"/>
+            <result property="min" column="min" jdbcType="DECIMAL"/>
+            <result property="limit" column="limit" jdbcType="SMALLINT"/>
+            <result property="type" column="type" jdbcType="SMALLINT"/>
+            <result property="status" column="status" jdbcType="SMALLINT"/>
+            <result property="goodsType" column="goods_type" jdbcType="SMALLINT"/>
+            <result property="goodsValue" column="goods_value" jdbcType="VARCHAR"/>
+            <result property="code" column="code" jdbcType="VARCHAR"/>
+            <result property="timeType" column="time_type" jdbcType="SMALLINT"/>
+            <result property="days" column="days" jdbcType="SMALLINT"/>
+            <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+            <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,desc,
+        tag,total,discount,
+        min,limit,type,
+        status,goods_type,goods_value,
+        code,time_type,days,
+        start_time,end_time,add_time,
+        update_time,deleted
+    </sql>
+</mapper>

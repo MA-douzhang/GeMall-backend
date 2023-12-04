@@ -6,7 +6,7 @@ package com.madou.springbootinit.common;
 public enum ErrorCode {
     SUCCESS(0, "ok"),
     PARAMS_ERROR(40000, "请求参数错误"),
-    NOT_LOGIN_ERROR(40100, "未登录"),
+    NOT_LOGIN_ERROR(501, "未登录"),
     NO_AUTH_ERROR(40101, "无权限"),
     NOT_FOUND_ERROR(40400, "请求数据不存在"),
     TOO_MANY_REQUESTS(42900, "请求频繁"),
@@ -17,23 +17,23 @@ public enum ErrorCode {
     /**
      * 状态码
      */
-    private final int code;
+    private final int errno;
 
     /**
      * 信息
      */
-    private final String message;
+    private final String errmsg;
 
     ErrorCode(int code, String message) {
-        this.code = code;
-        this.message = message;
+        this.errno = code;
+        this.errmsg = message;
     }
 
     public int getCode() {
-        return code;
+        return errno;
     }
 
     public String getMessage() {
-        return message;
+        return errmsg;
     }
 }

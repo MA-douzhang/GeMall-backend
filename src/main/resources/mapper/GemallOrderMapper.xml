@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.madou.springbootinit.mapper.GemallOrderMapper">
+
+    <resultMap id="BaseResultMap" type="com.madou.springbootinit.model.entity.GemallOrder">
+            <id property="id" column="id" jdbcType="INTEGER"/>
+            <result property="userId" column="user_id" jdbcType="INTEGER"/>
+            <result property="orderSn" column="order_sn" jdbcType="VARCHAR"/>
+            <result property="orderStatus" column="order_status" jdbcType="SMALLINT"/>
+            <result property="aftersaleStatus" column="aftersale_status" jdbcType="SMALLINT"/>
+            <result property="consignee" column="consignee" jdbcType="VARCHAR"/>
+            <result property="mobile" column="mobile" jdbcType="VARCHAR"/>
+            <result property="address" column="address" jdbcType="VARCHAR"/>
+            <result property="message" column="message" jdbcType="VARCHAR"/>
+            <result property="goodsPrice" column="goods_price" jdbcType="DECIMAL"/>
+            <result property="freightPrice" column="freight_price" jdbcType="DECIMAL"/>
+            <result property="couponPrice" column="coupon_price" jdbcType="DECIMAL"/>
+            <result property="integralPrice" column="integral_price" jdbcType="DECIMAL"/>
+            <result property="grouponPrice" column="groupon_price" jdbcType="DECIMAL"/>
+            <result property="orderPrice" column="order_price" jdbcType="DECIMAL"/>
+            <result property="actualPrice" column="actual_price" jdbcType="DECIMAL"/>
+            <result property="payId" column="pay_id" jdbcType="VARCHAR"/>
+            <result property="payTime" column="pay_time" jdbcType="TIMESTAMP"/>
+            <result property="shipSn" column="ship_sn" jdbcType="VARCHAR"/>
+            <result property="shipChannel" column="ship_channel" jdbcType="VARCHAR"/>
+            <result property="shipTime" column="ship_time" jdbcType="TIMESTAMP"/>
+            <result property="refundAmount" column="refund_amount" jdbcType="DECIMAL"/>
+            <result property="refundType" column="refund_type" jdbcType="VARCHAR"/>
+            <result property="refundContent" column="refund_content" jdbcType="VARCHAR"/>
+            <result property="refundTime" column="refund_time" jdbcType="TIMESTAMP"/>
+            <result property="confirmTime" column="confirm_time" jdbcType="TIMESTAMP"/>
+            <result property="comments" column="comments" jdbcType="SMALLINT"/>
+            <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,user_id,order_sn,
+        order_status,aftersale_status,consignee,
+        mobile,address,message,
+        goods_price,freight_price,coupon_price,
+        integral_price,groupon_price,order_price,
+        actual_price,pay_id,pay_time,
+        ship_sn,ship_channel,ship_time,
+        refund_amount,refund_type,refund_content,
+        refund_time,confirm_time,comments,
+        end_time,add_time,update_time,
+        deleted
+    </sql>
+</mapper>
