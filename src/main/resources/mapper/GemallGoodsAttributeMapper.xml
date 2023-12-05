@@ -16,7 +16,7 @@
 
     <sql id="Base_Column_List">
         id,goods_id,attribute,
-        value,add_time,update_time,
+        `value`,add_time,update_time,
         deleted
     </sql>
 </mapper>

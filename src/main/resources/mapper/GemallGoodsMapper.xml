@@ -29,7 +29,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,goods_sn,name,
+        id,goods_sn,`name`,
         category_id,brand_id,gallery,
         keywords,brief,is_on_sale,
         sort_order,pic_url,share_url,

@@ -28,4 +28,12 @@ public interface GemallCouponService extends IService<GemallCoupon> {
      * @return
      */
     GemallCoupon findByCode(String code);
+
+    /**
+     * 查询分页列表
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<GemallCoupon> queryList(int offset, int limit);
 }

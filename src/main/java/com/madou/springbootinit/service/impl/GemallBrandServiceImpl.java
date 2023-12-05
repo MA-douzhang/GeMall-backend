@@ -25,15 +25,23 @@ public class GemallBrandServiceImpl extends ServiceImpl<GemallBrandMapper, Gemal
     public List<GemallBrand> queryList(Integer page, Integer limit, String sort, String order) {
 
         QueryWrapper<GemallBrand> queryWrapper = new QueryWrapper<>();
-        if (order.equals(CommonConstant.SORT_ORDER_DESC)) {
-            queryWrapper.orderByDesc(sort);
-        } else {
-            queryWrapper.orderByAsc(sort);
+        if (sort != null) {
+            if (order.equals(CommonConstant.SORT_ORDER_DESC)) {
+                queryWrapper.orderByDesc(sort);
+            } else {
+                queryWrapper.orderByAsc(sort);
+            }
         }
+
         Page<GemallBrand> userPage = new Page<>(page, limit);
         IPage<GemallBrand> userIPage = this.page(userPage, queryWrapper);
         return userIPage.getRecords();
 
+    }
+
+    @Override
+    public List<GemallBrand> query(int page, Integer limit) {
+        return queryList(page, limit, null, null);
     }
 }
 

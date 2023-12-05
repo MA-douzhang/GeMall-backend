@@ -31,6 +31,7 @@ public class GemallBrand implements Serializable {
     /**
      * 品牌商简介
      */
+    @TableField("`desc`")
     private String desc;
 
     /**

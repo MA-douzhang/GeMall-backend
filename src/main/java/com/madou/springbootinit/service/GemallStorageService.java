@@ -10,4 +10,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface GemallStorageService extends IService<GemallStorage> {
 
+    /**
+     * 根据key查询配置信息
+     * @param key
+     * @return
+     */
+    GemallStorage findByKey(String key);
 }

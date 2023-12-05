@@ -24,8 +24,8 @@
     <sql id="Base_Column_List">
         id,order_id,goods_id,
         goods_name,goods_sn,product_id,
-        number,price,specifications,
-        pic_url,comment,add_time,
+        `number`,price,specifications,
+        pic_url,`comment`,add_time,
         update_time,deleted
     </sql>
 </mapper>

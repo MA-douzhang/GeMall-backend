@@ -19,9 +19,9 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,admin,ip,
-        type,action,status,
-        result,comment,add_time,
+        id,`admin`,ip,
+        type,`action`,`status`,
+        result,`comment`,add_time,
         update_time,deleted
     </sql>
 </mapper>

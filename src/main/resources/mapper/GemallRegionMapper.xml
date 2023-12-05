@@ -13,7 +13,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,pid,name,
-        type,code
+        id,pid,`name`,
+        type,`code`
     </sql>
 </mapper>

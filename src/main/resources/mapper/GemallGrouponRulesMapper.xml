@@ -21,7 +21,7 @@
     <sql id="Base_Column_List">
         id,goods_id,goods_name,
         pic_url,discount,discount_member,
-        expire_time,status,add_time,
+        expire_time,`status`,add_time,
         update_time,deleted
     </sql>
 </mapper>

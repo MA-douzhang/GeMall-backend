@@ -10,4 +10,10 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface GemallGoodsSpecificationService extends IService<GemallGoodsSpecification> {
 
+    /**
+     * 获取商品规格
+     * @param id
+     * @return
+     */
+    Object getSpecificationVoList(Integer id);
 }

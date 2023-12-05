@@ -7,6 +7,7 @@ import com.madou.springbootinit.system.SystemConfig;
 import com.madou.springbootinit.task.OrderUnpaidTask;
 import com.madou.springbootinit.task.TaskService;
 import com.madou.springbootinit.utils.*;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,15 +45,13 @@ public class OrderService {
     @Resource
     private GemallUserService userService;
     @Resource
-    private GemallOrderService orderService;
+    private GemallOrderService gemallOrderService;
     @Resource
     private GemallOrderGoodsService orderGoodsService;
     @Resource
     private GemallAddressService addressService;
     @Resource
     private GemallCartService cartService;
-    @Resource
-    private GemallRegionService regionService;
     @Resource
     private GemallGoodsProductService productService;
     @Resource
@@ -63,8 +62,6 @@ public class OrderService {
     private ExpressService expressService;
     @Resource
     private GemallCommentService commentService;
-    @Resource
-    private GemallCouponService couponService;
     @Resource
     private GemallCouponUserService couponUserService;
     @Resource
@@ -92,7 +89,7 @@ public class OrderService {
         }
 
         List<Integer> orderStatus = OrderUtil.orderStatus(showType);
-        List<GemallOrder> orderList = orderService.queryByOrderStatus(userId, orderStatus, page, limit, sort, order);
+        List<GemallOrder> orderList = gemallOrderService.queryByOrderStatus(userId, orderStatus, page, limit, sort, order);
 
         List<Map<String, Object>> orderVoList = new ArrayList<>(orderList.size());
         for (GemallOrder o : orderList) {
@@ -144,7 +141,7 @@ public class OrderService {
         }
 
         // 订单信息
-        GemallOrder order = orderService.findById(userId, orderId);
+        GemallOrder order = gemallOrderService.findById(userId, orderId);
         if (null == order) {
             return ResponseUtil.fail(ORDER_UNKNOWN, "订单不存在");
         }
@@ -334,7 +331,7 @@ public class OrderService {
         // 订单
         order = new GemallOrder();
         order.setUserId(userId);
-        order.setOrderSn(orderService.generateOrderSn(userId));
+        order.setOrderSn(gemallOrderService.generateOrderSn(userId));
         order.setOrderStatus(OrderUtil.STATUS_CREATE);
         order.setConsignee(checkedAddress.getName());
         order.setMobile(checkedAddress.getTel());
@@ -356,7 +353,7 @@ public class OrderService {
         }
 
         // 添加订单表项
-        orderService.save(order);
+        gemallOrderService.save(order);
         orderId = order.getId();
 
         // 添加订单商品表项
@@ -441,7 +438,7 @@ public class OrderService {
             GemallOrder o = new GemallOrder();
             o.setId(orderId);
             o.setOrderStatus(OrderUtil.STATUS_PAY);
-            orderService.updateById(o);
+            gemallOrderService.updateById(o);
 
             //  支付成功，有团购信息，更新团购信息
             GemallGroupon groupon = grouponService.queryByOrderId(order.getId());
@@ -515,7 +512,7 @@ public class OrderService {
             return ResponseUtil.badArgument();
         }
 
-        GemallOrder order = orderService.findById(userId, orderId);
+        GemallOrder order = gemallOrderService.findById(userId, orderId);
         if (order == null) {
             return ResponseUtil.badArgumentValue();
         }
@@ -534,7 +531,7 @@ public class OrderService {
         // 设置订单已取消状态
         order.setOrderStatus(OrderUtil.STATUS_CANCEL);
         order.setEndTime(LocalDateTime.now());
-        if (orderService.updateWithOptimisticLocker(order) == 0) {
+        if (gemallOrderService.updateWithOptimisticLocker(order) == 0) {
             throw new RuntimeException("更新数据已失效");
         }
 
@@ -574,7 +571,7 @@ public class OrderService {
             return ResponseUtil.badArgument();
         }
 
-        GemallOrder order = orderService.findById(userId, orderId);
+        GemallOrder order = gemallOrderService.findById(userId, orderId);
         if (order == null) {
             return ResponseUtil.badArgument();
         }
@@ -589,7 +586,7 @@ public class OrderService {
 
         // 设置订单申请退款状态
         order.setOrderStatus(OrderUtil.STATUS_REFUND);
-        if (orderService.updateWithOptimisticLocker(order) == 0) {
+        if (gemallOrderService.updateWithOptimisticLocker(order) == 0) {
             return ResponseUtil.updatedDateExpired();
         }
 
@@ -615,7 +612,7 @@ public class OrderService {
             return ResponseUtil.badArgument();
         }
 
-        GemallOrder order = orderService.findById(userId, orderId);
+        GemallOrder order = gemallOrderService.findById(userId, orderId);
         if (order == null) {
             return ResponseUtil.badArgument();
         }
@@ -633,7 +630,7 @@ public class OrderService {
 
         order.setOrderStatus(OrderUtil.STATUS_CONFIRM);
         order.setConfirmTime(LocalDateTime.now());
-        if (orderService.updateWithOptimisticLocker(order) == 0) {
+        if (gemallOrderService.updateWithOptimisticLocker(order) == 0) {
             return ResponseUtil.updatedDateExpired();
         }
         return ResponseUtil.ok();
@@ -658,7 +655,7 @@ public class OrderService {
             return ResponseUtil.badArgument();
         }
 
-        GemallOrder order = orderService.findById(userId, orderId);
+        GemallOrder order = gemallOrderService.findById(userId, orderId);
         if (order == null) {
             return ResponseUtil.badArgument();
         }
@@ -673,7 +670,7 @@ public class OrderService {
 
         // 订单order_status没有字段用于标识删除
         // 而是存在专门的delete字段表示是否删除
-        orderService.removeById(orderId);
+        gemallOrderService.removeById(orderId);
         // 售后也同时删除
         aftersaleService.deleteByOrderId(userId, orderId);
 
@@ -695,7 +692,7 @@ public class OrderService {
 
         if (orderGoods != null) {
             Integer orderId = orderGoods.getOrderId();
-            GemallOrder order = orderService.getById(orderId);
+            GemallOrder order = gemallOrderService.getById(orderId);
             if (!order.getUserId().equals(userId)) {
                 return ResponseUtil.badArgument();
             }
@@ -726,7 +723,7 @@ public class OrderService {
             return ResponseUtil.badArgumentValue();
         }
         Integer orderId = orderGoods.getOrderId();
-        GemallOrder order = orderService.findById(userId, orderId);
+        GemallOrder order = gemallOrderService.findById(userId, orderId);
         if (order == null) {
             return ResponseUtil.badArgumentValue();
         }
@@ -763,7 +760,7 @@ public class OrderService {
         comment.setStar(star);
         comment.setContent(content);
         comment.setHasPicture(Boolean.TRUE.equals(hasPicture) ? 1 : 0);
-        comment.setPicUrls(picUrls.toArray(new String[]{}));
+        comment.setPicUrls(new String());
         commentService.save(comment);
 
         // 2. 更新订单商品的评价列表
@@ -776,7 +773,7 @@ public class OrderService {
             commentCount--;
         }
         order.setComments(commentCount);
-        orderService.updateWithOptimisticLocker(order);
+        gemallOrderService.updateWithOptimisticLocker(order);
 
         return ResponseUtil.ok();
     }
@@ -809,7 +806,7 @@ public class OrderService {
             return ResponseUtil.badArgument();
         }
 
-        GemallOrder order = orderService.findById(userId, orderId);
+        GemallOrder order = gemallOrderService.findById(userId, orderId);
         if (order == null) {
             return ResponseUtil.badArgumentValue();
         }
@@ -837,7 +834,7 @@ public class OrderService {
             return ResponseUtil.fail(ORDER_PAY_FAIL, "订单不能支付");
         }
 
-        if (orderService.updateWithOptimisticLocker(order) == 0) {
+        if (gemallOrderService.updateWithOptimisticLocker(order) == 0) {
             return ResponseUtil.updatedDateExpired();
         }
         return ResponseUtil.ok();

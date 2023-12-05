@@ -22,7 +22,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,user_id,
+        id,`name`,user_id,
         province,city,county,
         address_detail,area_code,postal_code,
         tel,is_default,add_time,

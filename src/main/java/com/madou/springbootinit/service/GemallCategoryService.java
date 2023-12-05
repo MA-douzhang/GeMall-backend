@@ -24,4 +24,26 @@ public interface GemallCategoryService extends IService<GemallCategory> {
      * @return
      */
     List<GemallCategory> queryByPid(Integer id);
+
+    /**
+     * 查询二级类目
+     * @param goodsCatIds
+     * @return
+     */
+    List<GemallCategory> queryL2ByIds(List<Integer> goodsCatIds);
+
+    /**
+     * 查询目录列表
+     * @return
+     */
+    List<GemallCategory> queryChannel();
+
+    /**
+     * 查询一级目录
+     * @param offset
+     * @param limit
+     * @return
+     */
+    List<GemallCategory> queryL1WithoutRecommend(int offset,  int limit);
+
 }

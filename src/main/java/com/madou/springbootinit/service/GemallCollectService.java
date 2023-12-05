@@ -32,4 +32,13 @@ public interface GemallCollectService extends IService<GemallCollect> {
      * @return
      */
     GemallCollect queryByTypeAndValue(Integer userId, Integer type, Integer valueId);
+
+    /**
+     * 用户收藏数量
+     * @param userId
+     * @param i
+     * @param id
+     * @return
+     */
+    int count(Integer userId, int i, Integer id);
 }

@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.*;
 /**
@@ -51,7 +52,7 @@ public class GemallGrouponRules implements Serializable {
     /**
      * 团购过期时间
      */
-    private Date expireTime;
+    private LocalDateTime expireTime;
 
     /**
      * 团购规则状态，正常上线则0，到期自动下线则1，管理手动下线则2

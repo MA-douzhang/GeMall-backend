@@ -21,7 +21,7 @@ import java.util.Map;
 public class UserController {
 
     @Resource
-    private GemallOrderService orderService;
+    private GemallOrderService gemallOrderService;
 
     /**
      * 用户个人页面数据
@@ -38,7 +38,7 @@ public class UserController {
         }
 
         Map<Object, Object> data = new HashMap<Object, Object>();
-        data.put("order", orderService.orderInfo(userId));
+        data.put("order", gemallOrderService.orderInfo(userId));
         return ResponseUtil.ok(data);
     }
 

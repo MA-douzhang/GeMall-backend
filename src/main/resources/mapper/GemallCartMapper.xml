@@ -24,7 +24,7 @@
     <sql id="Base_Column_List">
         id,user_id,goods_id,
         goods_sn,goods_name,product_id,
-        price,number,specifications,
+        price,`number`,specifications,
         checked,pic_url,add_time,
         update_time,deleted
     </sql>

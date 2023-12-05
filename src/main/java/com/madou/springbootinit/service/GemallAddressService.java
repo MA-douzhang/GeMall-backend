@@ -39,4 +39,19 @@ public interface GemallAddressService extends IService<GemallAddress> {
      * @return
      */
     Boolean add(GemallAddress address);
+
+    /**
+     * 根据用户id和地址id查询地址信息
+     * @param userId
+     * @param addressId
+     * @return
+     */
+    GemallAddress query(Integer userId, Integer addressId);
+
+    /**
+     * 查询用户默认地址
+     * @param userId
+     * @return
+     */
+    GemallAddress findDefault(Integer userId);
 }

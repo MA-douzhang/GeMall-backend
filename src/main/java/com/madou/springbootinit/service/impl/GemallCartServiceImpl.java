@@ -37,7 +37,47 @@ public class GemallCartServiceImpl extends ServiceImpl<GemallCartMapper, GemallC
     @Override
     public void clearGoods(Integer userId) {
         QueryWrapper<GemallCart> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("user_id", userId);
+        this.remove(queryWrapper);
+    }
+
+    @Override
+    public List<GemallCart> queryByUid(Integer userId) {
+
+        QueryWrapper<GemallCart> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        return this.list(queryWrapper);
+    }
+
+    @Override
+    public GemallCart queryExist(Integer goodsId, Integer productId, Integer userId) {
+        QueryWrapper<GemallCart> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("product_id", productId);
+        queryWrapper.eq("goods_id", goodsId);
+        return this.getOne(queryWrapper);
+    }
+
+    @Override
+    public void updateCheck(Integer userId, List<Integer> productIds, Boolean isChecked) {
+        QueryWrapper<GemallCart> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        queryWrapper.in("product_id", productIds);
+        GemallCart cart = new GemallCart();
+        if (isChecked) {
+            cart.setChecked(1);
+
+        } else {
+            cart.setChecked(0);
+        }
+        this.update(cart, queryWrapper);
+    }
+
+    @Override
+    public void delete(List<Integer> productIds, Integer userId) {
+        QueryWrapper<GemallCart> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        queryWrapper.in("product_id", productIds);
         this.remove(queryWrapper);
     }
 }

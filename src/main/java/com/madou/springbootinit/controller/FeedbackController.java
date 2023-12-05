@@ -45,7 +45,7 @@ public class FeedbackController {
 
         Boolean hasPicture = feedback.getHasPicture() == 1;
         if (hasPicture == null || !hasPicture) {
-            feedback.setPicUrls(new String[0]);
+            feedback.setPicUrls(new  String());
         }
 
         // 测试手机号码是否正确

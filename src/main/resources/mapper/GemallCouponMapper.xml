@@ -28,11 +28,11 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,name,desc,
+        id,`name`,`desc`,
         tag,total,discount,
-        min,limit,type,
-        status,goods_type,goods_value,
-        code,time_type,days,
+        min,`limit`,type,
+        `status`,goods_type,goods_value,
+        `code`,time_type,days,
         start_time,end_time,add_time,
         update_time,deleted
     </sql>

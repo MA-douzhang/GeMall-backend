@@ -1,13 +1,16 @@
 package com.madou.springbootinit.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.madou.springbootinit.mapper.GoodsProductMapper;
 import com.madou.springbootinit.model.entity.GemallGoodsProduct;
+import com.madou.springbootinit.model.entity.GemallGoodsSpecification;
 import com.madou.springbootinit.service.GemallGoodsProductService;
 import com.madou.springbootinit.mapper.GemallGoodsProductMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
 * @author MA_dou
@@ -29,6 +32,13 @@ public class GemallGoodsProductServiceImpl extends ServiceImpl<GemallGoodsProduc
     @Override
     public int addStock(Integer productId, Integer number) {
         return goodsProductMapper.addStock(productId, number);
+    }
+
+    @Override
+    public List<GemallGoodsProduct> queryByGid(Integer id) {
+        QueryWrapper<GemallGoodsProduct> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("goods_id", id);
+        return this.list(queryWrapper);
     }
 }
 

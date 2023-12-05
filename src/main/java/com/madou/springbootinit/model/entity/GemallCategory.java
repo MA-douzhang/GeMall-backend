@@ -35,6 +35,7 @@ public class GemallCategory implements Serializable {
     /**
      * 类目广告语介绍
      */
+    @TableField("`desc`")
     private String desc;
 
     /**
@@ -76,7 +77,7 @@ public class GemallCategory implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Integer deleted;
+    private Boolean deleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

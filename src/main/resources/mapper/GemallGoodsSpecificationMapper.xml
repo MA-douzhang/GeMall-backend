@@ -17,7 +17,7 @@
 
     <sql id="Base_Column_List">
         id,goods_id,specification,
-        value,pic_url,add_time,
+        `value`,pic_url,add_time,
         update_time,deleted
     </sql>
 </mapper>

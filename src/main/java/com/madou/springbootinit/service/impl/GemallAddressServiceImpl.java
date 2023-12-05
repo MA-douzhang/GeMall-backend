@@ -11,37 +11,37 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
-* @author MA_dou
-* @description 针对表【gemall_address(收货地址表)】的数据库操作Service实现
-* @createDate 2023-12-01 23:40:25
-*/
+ * @author MA_dou
+ * @description 针对表【gemall_address(收货地址表)】的数据库操作Service实现
+ * @createDate 2023-12-01 23:40:25
+ */
 @Service
 public class GemallAddressServiceImpl extends ServiceImpl<GemallAddressMapper, GemallAddress>
-    implements GemallAddressService{
+        implements GemallAddressService {
 
     @Override
     public List<GemallAddress> queryByUserId(Integer userId) {
         QueryWrapper<GemallAddress> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("user_id", userId);
         return this.list(queryWrapper);
     }
 
     @Override
     public GemallAddress queryByIdInfo(Integer userId, Integer id) {
         QueryWrapper<GemallAddress> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
-        queryWrapper.eq("id",id);
+        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("id", id);
         return this.getOne(queryWrapper);
     }
 
     @Override
     public void resetDefault(Integer userId) {
         QueryWrapper<GemallAddress> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
+        queryWrapper.eq("user_id", userId);
         GemallAddress address = new GemallAddress();
         address.setIsDefault(0);
         address.setUpdateTime(LocalDateTime.now());
-        this.update(address,queryWrapper);
+        this.update(address, queryWrapper);
     }
 
     @Override
@@ -49,6 +49,23 @@ public class GemallAddressServiceImpl extends ServiceImpl<GemallAddressMapper, G
         address.setAddTime(LocalDateTime.now());
         address.setUpdateTime(LocalDateTime.now());
         return this.save(address);
+    }
+
+    @Override
+    public GemallAddress query(Integer userId, Integer addressId) {
+        QueryWrapper<GemallAddress> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("id", addressId);
+        return this.getOne(queryWrapper);
+
+    }
+
+    @Override
+    public GemallAddress findDefault(Integer userId) {
+        QueryWrapper<GemallAddress> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("is_default", 1);
+        return this.getOne(queryWrapper);
     }
 }
 

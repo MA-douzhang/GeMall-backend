@@ -22,7 +22,7 @@
     <sql id="Base_Column_List">
         id,user_id,username,
         mobile,feed_type,content,
-        status,has_picture,pic_urls,
+        `status`,has_picture,pic_urls,
         add_time,update_time,deleted
     </sql>
 </mapper>

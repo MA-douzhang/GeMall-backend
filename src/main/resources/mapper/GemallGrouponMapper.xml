@@ -22,7 +22,7 @@
     <sql id="Base_Column_List">
         id,order_id,groupon_id,
         rules_id,user_id,share_url,
-        creator_user_id,creator_user_time,status,
+        creator_user_id,creator_user_time,`status`,
         add_time,update_time,deleted
     </sql>
 </mapper>

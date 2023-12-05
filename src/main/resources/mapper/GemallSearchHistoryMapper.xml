@@ -16,7 +16,7 @@
 
     <sql id="Base_Column_List">
         id,user_id,keyword,
-        from,add_time,update_time,
+        `from`,add_time,update_time,
         deleted
     </sql>
 </mapper>

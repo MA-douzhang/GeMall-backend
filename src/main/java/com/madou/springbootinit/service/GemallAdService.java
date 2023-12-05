@@ -3,6 +3,8 @@ package com.madou.springbootinit.service;
 import com.madou.springbootinit.model.entity.GemallAd;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
 * @author MA_dou
 * @description 针对表【gemall_ad(广告表)】的数据库操作Service
@@ -10,4 +12,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface GemallAdService extends IService<GemallAd> {
 
+    /**+
+     * 广告查询
+     * @return
+     */
+    List<GemallAd> queryIndex();
 }

@@ -21,4 +21,12 @@ public interface GemallBrandService extends IService<GemallBrand> {
      * @return
      */
     List<GemallBrand> queryList(Integer page, Integer limit, String sort, String order);
+
+    /**
+     * 返回分页列表
+     * @param page
+     * @param limit
+     * @return
+     */
+    List<GemallBrand> query(int page, Integer limit);
 }

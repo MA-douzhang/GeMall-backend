@@ -32,6 +32,7 @@ public class GemallCoupon implements Serializable {
     /**
      * 优惠券介绍，通常是显示优惠券使用限制文字
      */
+    @TableField("`desc`")
     private String desc;
 
     /**
@@ -47,6 +48,7 @@ public class GemallCoupon implements Serializable {
     /**
      * 优惠金额，
      */
+    @TableField("`discount`")
     private BigDecimal discount;
 
     /**
@@ -57,6 +59,7 @@ public class GemallCoupon implements Serializable {
     /**
      * 用户领券限制数量，如果是0，则是不限制；默认是1，限领一张.
      */
+    @TableField("`limit`")
     private Integer limit;
 
     /**

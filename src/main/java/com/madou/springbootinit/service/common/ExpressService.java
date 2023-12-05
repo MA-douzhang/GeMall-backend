@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.madou.springbootinit.config.ExpressProperties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.util.Base64Utils;
 
 import java.net.URLEncoder;
@@ -18,6 +19,7 @@ import java.util.Map;
  * <p>
  * 快递鸟即时查询API http://www.kdniao.com/api-track
  */
+@Component
 public class ExpressService {
 
     private final Log logger = LogFactory.getLog(ExpressService.class);

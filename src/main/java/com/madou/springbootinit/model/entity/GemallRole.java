@@ -30,6 +30,7 @@ public class GemallRole implements Serializable {
     /**
      * 角色描述
      */
+    @TableField("`desc`")
     private String desc;
 
     /**

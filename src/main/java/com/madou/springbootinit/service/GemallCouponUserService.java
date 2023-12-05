@@ -55,4 +55,12 @@ public interface GemallCouponUserService extends IService<GemallCouponUser> {
      * @return
      */
     List<GemallCouponUser> findByOid(Integer orderId);
+
+    /**
+     * 查询个人优惠价
+     * @param userId
+     * @param couponId
+     * @return
+     */
+    GemallCouponUser queryOne(Integer userId, Integer couponId);
 }

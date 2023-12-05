@@ -20,7 +20,7 @@
 
     <sql id="Base_Column_List">
         id,user_id,coupon_id,
-        status,used_time,start_time,
+        `status`,used_time,start_time,
         end_time,order_id,add_time,
         update_time,deleted
     </sql>

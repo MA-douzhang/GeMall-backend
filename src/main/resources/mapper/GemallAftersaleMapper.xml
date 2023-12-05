@@ -24,8 +24,8 @@
     <sql id="Base_Column_List">
         id,aftersale_sn,order_id,
         user_id,type,reason,
-        amount,pictures,comment,
-        status,handle_time,add_time,
+        amount,pictures,`comment`,
+        `status`,handle_time,add_time,
         update_time,deleted
     </sql>
 </mapper>

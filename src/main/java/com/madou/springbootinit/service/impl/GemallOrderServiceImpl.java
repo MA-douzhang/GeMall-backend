@@ -32,8 +32,6 @@ public class GemallOrderServiceImpl extends ServiceImpl<GemallOrderMapper, Gemal
         implements GemallOrderService {
 
     @Resource
-    private GemallOrderMapper gemallOrderMapper;
-    @Resource
     private OrderMapper orderMapper;
     @Override
     public Object orderInfo(Integer userId) {

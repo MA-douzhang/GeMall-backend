@@ -32,4 +32,35 @@ public interface GemallCartService extends IService<GemallCart> {
      * @param userId
      */
     void clearGoods(Integer userId);
+
+    /**
+     * 根据用户id查询购物车信息
+     * @param userId
+     * @return
+     */
+    List<GemallCart> queryByUid(Integer userId);
+
+    /**
+     * 查询当前商品在购物车是否已经存在
+     * @param goodsId
+     * @param productId
+     * @param userId
+     * @return
+     */
+    GemallCart queryExist(Integer goodsId, Integer productId, Integer userId);
+
+    /**
+     * 更新购物车状态
+     * @param userId
+     * @param productIds
+     * @param isChecked
+     */
+    void updateCheck(Integer userId, List<Integer> productIds, Boolean isChecked);
+
+    /**
+     * 根据用户id和商品id删除购物车信息
+     * @param productIds
+     * @param userId
+     */
+    void delete(List<Integer> productIds, Integer userId);
 }

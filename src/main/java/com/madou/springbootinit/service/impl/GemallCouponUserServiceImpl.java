@@ -70,6 +70,16 @@ public class GemallCouponUserServiceImpl extends ServiceImpl<GemallCouponUserMap
         queryWrapper.eq("order_id", orderId);
         return list(queryWrapper);
     }
+
+    @Override
+    public GemallCouponUser queryOne(Integer userId, Integer couponId) {
+        List<GemallCouponUser> couponUserList = queryList(userId, couponId, CouponUserConstant.STATUS_USABLE, 1, 1, "add_time", "desc");
+        if (couponUserList.size() == 0) {
+            return null;
+        }
+        return couponUserList.get(0);
+
+    }
 }
 
 

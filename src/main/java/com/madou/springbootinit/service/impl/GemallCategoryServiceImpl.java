@@ -1,6 +1,8 @@
 package com.madou.springbootinit.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.madou.springbootinit.model.entity.GemallCategory;
 import com.madou.springbootinit.service.GemallCategoryService;
@@ -31,6 +33,35 @@ public class GemallCategoryServiceImpl extends ServiceImpl<GemallCategoryMapper,
         queryWrapper.eq("pid", id);
         return this.list(queryWrapper);
     }
+
+    @Override
+    public List<GemallCategory> queryL2ByIds(List<Integer> goodsCatIds) {
+        QueryWrapper<GemallCategory> queryWrapper = new QueryWrapper<>();
+        queryWrapper.in("id", goodsCatIds);
+        queryWrapper.eq("level", "L2");
+        return this.list(queryWrapper);
+
+    }
+
+    @Override
+    public List<GemallCategory> queryChannel() {
+        QueryWrapper<GemallCategory> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("level", "L1");
+        return this.list(queryWrapper);
+
+    }
+
+    @Override
+    public List<GemallCategory> queryL1WithoutRecommend(int offset, int limit) {
+        QueryWrapper<GemallCategory> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("level", "L1");
+        queryWrapper.notIn("name","推荐");
+        Page<GemallCategory> page1 = new Page<>(offset, limit);
+        IPage<GemallCategory> iPage = this.page(page1, queryWrapper);
+        return iPage.getRecords();
+
+    }
+
 }
 
 

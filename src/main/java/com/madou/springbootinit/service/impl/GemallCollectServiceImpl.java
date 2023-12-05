@@ -13,20 +13,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
-* @author MA_dou
-* @description 针对表【gemall_collect(收藏表)】的数据库操作Service实现
-* @createDate 2023-12-01 23:40:26
-*/
+ * @author MA_dou
+ * @description 针对表【gemall_collect(收藏表)】的数据库操作Service实现
+ * @createDate 2023-12-01 23:40:26
+ */
 @Service
 public class GemallCollectServiceImpl extends ServiceImpl<GemallCollectMapper, GemallCollect>
-    implements GemallCollectService{
+        implements GemallCollectService {
 
     @Override
     public List<GemallCollect> queryByType(Integer userId, Integer type, Integer page, Integer limit, String sort, String order) {
 
         QueryWrapper<GemallCollect> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
-        queryWrapper.eq("type",type);
+        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("type", type);
         if (order.equals(CommonConstant.SORT_ORDER_DESC)) {
             queryWrapper.orderByDesc(sort);
         } else {
@@ -40,10 +40,19 @@ public class GemallCollectServiceImpl extends ServiceImpl<GemallCollectMapper, G
     @Override
     public GemallCollect queryByTypeAndValue(Integer userId, Integer type, Integer valueId) {
         QueryWrapper<GemallCollect> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("user_id",userId);
-        queryWrapper.eq("type",type);
-        queryWrapper.eq("value_id",valueId);
+        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("type", type);
+        queryWrapper.eq("value_id", valueId);
         return this.getOne(queryWrapper);
+    }
+
+    @Override
+    public int count(Integer userId, int type, Integer id) {
+        QueryWrapper<GemallCollect> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userId);
+        queryWrapper.eq("type", type);
+        queryWrapper.eq("value_id", id);
+        return this.list(queryWrapper).size();
     }
 }
 

@@ -25,11 +25,11 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,username,password,
+        id,username,`password`,
         gender,birthday,last_login_time,
         last_login_ip,user_level,nickname,
         mobile,avatar,weixin_openid,
-        session_key,status,add_time,
+        session_key,`status`,add_time,
         update_time,deleted
     </sql>
 </mapper>

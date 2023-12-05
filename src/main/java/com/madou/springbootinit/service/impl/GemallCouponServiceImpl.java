@@ -45,6 +45,11 @@ public class GemallCouponServiceImpl extends ServiceImpl<GemallCouponMapper, Gem
         return this.getOne(queryWrapper);
 
     }
+
+    @Override
+    public List<GemallCoupon> queryList(int offset, int limit) {
+        return queryList(offset, limit, "add_time", "desc");
+    }
 }
 
 

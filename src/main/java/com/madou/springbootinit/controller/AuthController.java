@@ -68,7 +68,7 @@ public class AuthController {
         // 更新登录情况
         user.setLastLoginTime(LocalDateTime.now());
         user.setLastLoginIp(IpUtil.getIpAddr(request));
-        if (userService.updateById(user)) {
+        if (!userService.updateById(user)) {
             return ResponseUtil.updatedDataFailed();
         }
 
