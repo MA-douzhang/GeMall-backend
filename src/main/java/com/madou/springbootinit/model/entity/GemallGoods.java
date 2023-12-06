@@ -46,7 +46,7 @@ public class GemallGoods implements Serializable {
     /**
      * 商品宣传图片列表，采用JSON数组格式
      */
-    private String gallery;
+    private String[] gallery;
 
     /**
      * 商品关键字，采用逗号间隔
@@ -61,7 +61,7 @@ public class GemallGoods implements Serializable {
     /**
      * 是否上架
      */
-    private Integer isOnSale;
+    private Boolean isOnSale;
 
     /**
      *
@@ -81,12 +81,12 @@ public class GemallGoods implements Serializable {
     /**
      * 是否新品首发，如果设置则可以在新品首发页面展示
      */
-    private Integer isNew;
+    private Boolean isNew;
 
     /**
      * 是否人气推荐，如果设置则可以在人气推荐页面展示
      */
-    private Integer isHot;
+    private Boolean isHot;
 
     /**
      * 商品单位，例如件、盒
@@ -122,7 +122,7 @@ public class GemallGoods implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Integer deleted;
+    private Boolean deleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

@@ -50,12 +50,12 @@ public class GemallComment implements Serializable {
     /**
      * 是否含有图片
      */
-    private Integer hasPicture;
+    private Boolean hasPicture;
 
     /**
      * 图片地址列表，采用JSON数组格式
      */
-    private String picUrls;
+    private String[] picUrls;
 
     /**
      * 评分， 1-5
@@ -76,7 +76,7 @@ public class GemallComment implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Integer deleted;
+    private Boolean deleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

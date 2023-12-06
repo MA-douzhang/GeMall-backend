@@ -5,15 +5,17 @@
 <mapper namespace="com.madou.springbootinit.mapper.GemallGoodsProductMapper">
 
     <resultMap id="BaseResultMap" type="com.madou.springbootinit.model.entity.GemallGoodsProduct">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
-            <result property="specifications" column="specifications" jdbcType="VARCHAR"/>
-            <result property="price" column="price" jdbcType="DECIMAL"/>
-            <result property="number" column="number" jdbcType="INTEGER"/>
-            <result property="url" column="url" jdbcType="VARCHAR"/>
-            <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="deleted" column="deleted" jdbcType="TINYINT"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
+        <result property="specifications" column="specifications" jdbcType="VARCHAR"
+                typeHandler="com.madou.springbootinit.mybatis.JsonStringArrayTypeHandler"/>
+
+        <result property="price" column="price" jdbcType="DECIMAL"/>
+        <result property="number" column="number" jdbcType="INTEGER"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="deleted" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">

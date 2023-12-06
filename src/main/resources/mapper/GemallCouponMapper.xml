@@ -16,7 +16,7 @@
             <result property="type" column="type" jdbcType="SMALLINT"/>
             <result property="status" column="status" jdbcType="SMALLINT"/>
             <result property="goodsType" column="goods_type" jdbcType="SMALLINT"/>
-            <result property="goodsValue" column="goods_value" jdbcType="VARCHAR"/>
+        <result property="goodsValue" column="goods_value" jdbcType="VARCHAR" typeHandler="com.madou.springbootinit.mybatis.JsonIntegerArrayTypeHandler"/>
             <result property="code" column="code" jdbcType="VARCHAR"/>
             <result property="timeType" column="time_type" jdbcType="SMALLINT"/>
             <result property="days" column="days" jdbcType="SMALLINT"/>

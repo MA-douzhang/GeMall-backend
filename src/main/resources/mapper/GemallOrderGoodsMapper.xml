@@ -13,7 +13,8 @@
             <result property="productId" column="product_id" jdbcType="INTEGER"/>
             <result property="number" column="number" jdbcType="SMALLINT"/>
             <result property="price" column="price" jdbcType="DECIMAL"/>
-            <result property="specifications" column="specifications" jdbcType="VARCHAR"/>
+        <result property="specifications" column="specifications" jdbcType="VARCHAR"
+                typeHandler="com.madou.springbootinit.mybatis.JsonStringArrayTypeHandler"/>
             <result property="picUrl" column="pic_url" jdbcType="VARCHAR"/>
             <result property="comment" column="comment" jdbcType="INTEGER"/>
             <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>

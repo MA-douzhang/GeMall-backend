@@ -80,7 +80,7 @@ public class GemallCoupon implements Serializable {
     /**
      * 商品限制值，goods_type如果是0则空集合，如果是1则是类目集合，如果是2则是商品集合。
      */
-    private String goodsValue;
+    private Integer[] goodsValue;
 
     /**
      * 优惠券兑换码
@@ -121,7 +121,7 @@ public class GemallCoupon implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Integer deleted;
+    private Boolean deleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

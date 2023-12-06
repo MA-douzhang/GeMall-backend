@@ -63,12 +63,11 @@ public class TopicController {
     public Object detail(@LoginUser Integer userId, @NotNull Integer id) {
         GemallTopic topic = topicService.getById(id);
         List<GemallGoods> goods = new ArrayList<>();
-        for (String i : topic.getGoods().split("")){
+        for (Integer i : topic.getGoods()) {
             GemallGoods good = goodsService.findByIdVO(i);
             if (null != good)
                 goods.add(good);
         }
-
         // 用户收藏
         int userHasCollect = 0;
         if (userId != null) {

@@ -24,7 +24,7 @@ public class GemallGoodsServiceImpl extends ServiceImpl<GemallGoodsMapper, Gemal
         implements GemallGoodsService {
 
     @Override
-    public GemallGoods findByIdVO(String i) {
+    public GemallGoods findByIdVO(Integer i) {
 
         QueryWrapper<GemallGoods> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("id", i);
@@ -50,9 +50,8 @@ public class GemallGoodsServiceImpl extends ServiceImpl<GemallGoodsMapper, Gemal
         }
         if (!StringUtils.isEmpty(keyword)) {
             queryWrapper.like("name", keyword);
-            queryWrapper.like("keywords", keyword);
         }
-        queryWrapper.like("is_on_sale", true);
+        queryWrapper.eq("is_on_sale", 1);
         if (order.equals(CommonConstant.SORT_ORDER_DESC)) {
             queryWrapper.orderByDesc(sort);
         } else {

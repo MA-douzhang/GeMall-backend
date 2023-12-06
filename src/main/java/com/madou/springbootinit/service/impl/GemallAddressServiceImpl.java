@@ -39,7 +39,7 @@ public class GemallAddressServiceImpl extends ServiceImpl<GemallAddressMapper, G
         QueryWrapper<GemallAddress> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id", userId);
         GemallAddress address = new GemallAddress();
-        address.setIsDefault(0);
+        address.setIsDefault(false);
         address.setUpdateTime(LocalDateTime.now());
         this.update(address, queryWrapper);
     }

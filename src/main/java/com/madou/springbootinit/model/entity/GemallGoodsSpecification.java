@@ -56,7 +56,7 @@ public class GemallGoodsSpecification implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Integer deleted;
+    private Boolean deleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

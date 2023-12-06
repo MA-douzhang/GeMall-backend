@@ -68,7 +68,7 @@ public class GemallAddress implements Serializable {
     /**
      * 是否默认地址
      */
-    private Integer isDefault;
+    private Boolean isDefault;
 
     /**
      * 创建时间
@@ -84,7 +84,7 @@ public class GemallAddress implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Integer deleted;
+    private Boolean deleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

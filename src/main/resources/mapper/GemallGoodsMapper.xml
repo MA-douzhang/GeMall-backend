@@ -10,7 +10,7 @@
             <result property="name" column="name" jdbcType="VARCHAR"/>
             <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
             <result property="brandId" column="brand_id" jdbcType="INTEGER"/>
-            <result property="gallery" column="gallery" jdbcType="VARCHAR"/>
+        <result column="gallery" jdbcType="VARCHAR" property="gallery" typeHandler="com.madou.springbootinit.mybatis.JsonStringArrayTypeHandler" />
             <result property="keywords" column="keywords" jdbcType="VARCHAR"/>
             <result property="brief" column="brief" jdbcType="VARCHAR"/>
             <result property="isOnSale" column="is_on_sale" jdbcType="TINYINT"/>

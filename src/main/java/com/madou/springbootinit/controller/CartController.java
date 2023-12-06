@@ -68,7 +68,7 @@ public class CartController {
         // 更好的效果应该是告知用户商品失效，允许用户点击按钮来清除失效商品。
         for (GemallCart cart : list) {
             GemallGoods goods = goodsService.getById(cart.getGoodsId());
-            if (goods == null || goods.getIsOnSale()!=1) {
+            if (goods == null || goods.getIsOnSale()) {
                 cartService.removeById(cart.getId());
                 log.debug("系统自动删除失效购物车商品 goodsId=" + cart.getGoodsId() + " productId=" + cart.getProductId());
             }
@@ -84,7 +84,7 @@ public class CartController {
         for (GemallCart cart : cartList) {
             goodsCount += cart.getNumber();
             goodsAmount = goodsAmount.add(cart.getPrice().multiply(new BigDecimal(cart.getNumber())));
-            if (cart.getChecked()==1) {
+            if (cart.getChecked()) {
                 checkedGoodsCount += cart.getNumber();
                 checkedGoodsAmount = checkedGoodsAmount.add(cart.getPrice().multiply(new BigDecimal(cart.getNumber())));
             }
@@ -133,7 +133,7 @@ public class CartController {
 
         //判断商品是否可以购买
         GemallGoods goods = goodsService.getById(goodsId);
-        if (goods == null || goods.getIsOnSale()!=1) {
+        if (goods == null || goods.getIsOnSale()) {
             return ResponseUtil.fail(GOODS_UNSHELVE, "商品已下架");
         }
 
@@ -158,7 +158,7 @@ public class CartController {
             cart.setPrice(product.getPrice());
             cart.setSpecifications(product.getSpecifications());
             cart.setUserId(userId);
-            cart.setChecked(1);
+            cart.setChecked(true);
             cartService.save(cart);
         } else {
             //取得规格的信息,判断规格库存
@@ -186,7 +186,7 @@ public class CartController {
      * @param cart   购物车商品信息， { goodsId: xxx, productId: xxx, number: xxx }
      * @return 立即购买操作结果
      */
-    @PostMapping("fastadd")
+    @PostMapping("/fastadd")
     public Object fastadd(@LoginUser Integer userId, @RequestBody GemallCart cart) {
         if (userId == null) {
             return ResponseUtil.unlogin();
@@ -207,7 +207,7 @@ public class CartController {
 
         //判断商品是否可以购买
         GemallGoods goods = goodsService.getById(goodsId);
-        if (goods == null || goods.getIsOnSale()!=1) {
+        if (goods == null || goods.getIsOnSale()) {
             return ResponseUtil.fail(GOODS_UNSHELVE, "商品已下架");
         }
 
@@ -232,7 +232,7 @@ public class CartController {
             cart.setPrice(product.getPrice());
             cart.setSpecifications(product.getSpecifications());
             cart.setUserId(userId);
-            cart.setChecked(1);
+            cart.setChecked(true);
             cartService.save(cart);
         } else {
             //取得规格的信息,判断规格库存
@@ -289,7 +289,7 @@ public class CartController {
 
         //判断商品是否可以购买
         GemallGoods goods = goodsService.getById(goodsId);
-        if (goods == null || goods.getIsOnSale()!=1) {
+        if (goods == null || goods.getIsOnSale()) {
             return ResponseUtil.fail(GOODS_UNSHELVE, "商品已下架");
         }
 
@@ -519,7 +519,7 @@ public class CartController {
         BigDecimal integralPrice = new BigDecimal(0.00);
 
         // 订单费用
-        BigDecimal orderTotalPrice = checkedGoodsPrice.add(freightPrice).subtract(couponPrice).max(new BigDecimal(0.00));
+        BigDecimal orderTotalPrice = checkedGoodsPrice.add(freightPrice).subtract(couponPrice).max(new BigDecimal("0.00"));
 
         BigDecimal actualPrice = orderTotalPrice.subtract(integralPrice);
 

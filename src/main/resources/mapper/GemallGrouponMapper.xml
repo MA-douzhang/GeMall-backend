@@ -7,10 +7,12 @@
     <resultMap id="BaseResultMap" type="com.madou.springbootinit.model.entity.GemallGroupon">
             <id property="id" column="id" jdbcType="INTEGER"/>
             <result property="orderId" column="order_id" jdbcType="INTEGER"/>
+
             <result property="grouponId" column="groupon_id" jdbcType="INTEGER"/>
             <result property="rulesId" column="rules_id" jdbcType="INTEGER"/>
             <result property="userId" column="user_id" jdbcType="INTEGER"/>
             <result property="shareUrl" column="share_url" jdbcType="VARCHAR"/>
+
             <result property="creatorUserId" column="creator_user_id" jdbcType="INTEGER"/>
             <result property="creatorUserTime" column="creator_user_time" jdbcType="TIMESTAMP"/>
             <result property="status" column="status" jdbcType="SMALLINT"/>

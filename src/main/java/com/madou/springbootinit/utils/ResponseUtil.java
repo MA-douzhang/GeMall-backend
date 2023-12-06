@@ -61,10 +61,10 @@ public class ResponseUtil {
 
         if (list instanceof Page) {
             Page page = (Page) list;
-            data.put("total", page.getTotal());
-            data.put("page", page.getCurrent());
-            data.put("limit", page.getSize());
-            data.put("pages", page.getPages());
+            data.put("total", new Long(page.getTotal()).intValue());
+            data.put("page", new Long(page.getCurrent()).intValue());
+            data.put("limit",new Long( page.getSize()).intValue());
+            data.put("pages", new Long(page.getPages()).intValue());
         } else {
             data.put("total", list.size());
             data.put("page", 1);
@@ -81,10 +81,10 @@ public class ResponseUtil {
 
         if (pagedList instanceof Page) {
             Page page = (Page) pagedList;
-            data.put("total", page.getTotal());
-            data.put("page", page.getCurrent());
-            data.put("limit", page.getSize());
-            data.put("pages", page.getPages());
+            data.put("total", new Long(page.getTotal()).intValue());
+            data.put("page", new Long(page.getCurrent()).intValue());
+            data.put("limit",new Long( page.getSize()).intValue());
+            data.put("pages", new Long(page.getPages()).intValue());
         } else {
             data.put("total", pagedList.size());
             data.put("page", 1);

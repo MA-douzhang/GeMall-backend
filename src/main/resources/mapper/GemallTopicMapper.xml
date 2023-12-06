@@ -13,7 +13,7 @@
             <result property="readCount" column="read_count" jdbcType="VARCHAR"/>
             <result property="picUrl" column="pic_url" jdbcType="VARCHAR"/>
             <result property="sortOrder" column="sort_order" jdbcType="INTEGER"/>
-            <result property="goods" column="goods" jdbcType="VARCHAR"/>
+            <result property="goods" column="goods" jdbcType="VARCHAR" typeHandler="com.madou.springbootinit.mybatis.JsonIntegerArrayTypeHandler"/>
             <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="deleted" column="deleted" jdbcType="TINYINT"/>

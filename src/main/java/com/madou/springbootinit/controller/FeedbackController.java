@@ -43,11 +43,11 @@ public class FeedbackController {
             return ResponseUtil.badArgument();
         }
 
-        Boolean hasPicture = feedback.getHasPicture() == 1;
+        Boolean hasPicture = feedback.getHasPicture();
         if (hasPicture == null || !hasPicture) {
-            feedback.setPicUrls(new  String());
-        }
+            feedback.setPicUrls(new String[0]);
 
+        }
         // 测试手机号码是否正确
         String mobile = feedback.getMobile();
         if (StringUtils.isEmpty(mobile)) {

@@ -17,7 +17,7 @@ public interface GemallGoodsService extends IService<GemallGoods> {
      * @param i
      * @return
      */
-    GemallGoods findByIdVO(String i);
+    GemallGoods findByIdVO(Integer i);
 
     /**
      * 商品分页列表

@@ -61,7 +61,7 @@ public class GemallTopic implements Serializable {
     /**
      * 专题相关商品，采用JSON数组格式
      */
-    private String goods;
+    private Integer[] goods;
 
     /**
      * 创建时间
@@ -77,7 +77,7 @@ public class GemallTopic implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Integer deleted;
+    private Boolean deleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

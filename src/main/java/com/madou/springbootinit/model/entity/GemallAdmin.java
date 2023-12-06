@@ -58,7 +58,7 @@ public class GemallAdmin implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Integer deleted;
+    private Boolean deleted;
 
     /**
      * 角色列表

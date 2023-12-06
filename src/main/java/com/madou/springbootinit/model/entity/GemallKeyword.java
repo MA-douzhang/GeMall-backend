@@ -35,7 +35,7 @@ public class GemallKeyword implements Serializable {
     /**
      * 是否是热门关键字
      */
-    private Integer isHot;
+    private Boolean isHot;
 
     /**
      * 是否是默认关键字
@@ -61,7 +61,7 @@ public class GemallKeyword implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Integer deleted;
+    private Boolean deleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

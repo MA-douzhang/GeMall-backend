@@ -34,7 +34,7 @@ public class CouponVerifyService {
      */
     public GemallCoupon checkCoupon(Integer userId, Integer couponId, Integer userCouponId, BigDecimal checkedGoodsPrice, List<GemallCart> cartList) {
         GemallCoupon coupon = couponService.getById(couponId);
-        if (coupon == null || coupon.getDeleted() == 1) {
+        if (coupon == null || coupon.getDeleted()) {
             return null;
         }
 
@@ -71,12 +71,7 @@ public class CouponVerifyService {
         // 检测商品是否符合
         Map<Integer, List<GemallCart>> cartMap = new HashMap<>();
         //可使用优惠券的商品或分类
-        String[] split = coupon.getGoodsValue().split("");
-        Integer[] items = new Integer[split.length];
-        for (int i = 0; i < split.length; i++) {
-            items[i]=Integer.parseInt(split[i]);
-        }
-        List<Integer> goodsValueList = new ArrayList<>(Arrays.asList(items));
+        List<Integer> goodsValueList = new ArrayList<>(Arrays.asList(coupon.getGoodsValue()));
         Integer goodType = coupon.getGoodsType();
 
         if (goodType.equals(CouponConstant.GOODS_TYPE_CATEGORY) ||

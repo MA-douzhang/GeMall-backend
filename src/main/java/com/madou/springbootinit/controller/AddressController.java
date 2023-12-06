@@ -104,7 +104,7 @@ public class AddressController{
 			return ResponseUtil.badArgument();
 		}
 
-		Integer isDefault = address.getIsDefault();
+		Boolean isDefault = address.getIsDefault();
 		if (isDefault == null) {
 			return ResponseUtil.badArgument();
 		}
@@ -129,7 +129,7 @@ public class AddressController{
 		}
 
 		if (address.getId() == null || address.getId().equals(0)) {
-			if (address.getIsDefault() == 1) {
+			if (address.getIsDefault()) {
 				// 重置其他收货地址的默认选项
 				addressService.resetDefault(userId);
 			}
@@ -141,7 +141,7 @@ public class AddressController{
 			if (gemallAddress == null) {
 				return ResponseUtil.badArgumentValue();
 			}
-			if (address.getIsDefault()==1) {
+			if (address.getIsDefault()) {
 				// 重置其他收货地址的默认选项
 				addressService.resetDefault(userId);
 			}

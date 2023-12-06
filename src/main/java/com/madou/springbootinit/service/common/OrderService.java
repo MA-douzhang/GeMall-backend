@@ -759,8 +759,8 @@ public class OrderService {
         comment.setValueId(orderGoods.getGoodsId());
         comment.setStar(star);
         comment.setContent(content);
-        comment.setHasPicture(Boolean.TRUE.equals(hasPicture) ? 1 : 0);
-        comment.setPicUrls(new String());
+        comment.setHasPicture(hasPicture);
+        comment.setPicUrls(picUrls.toArray(new String[]{}));
         commentService.save(comment);
 
         // 2. 更新订单商品的评价列表

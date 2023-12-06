@@ -7,6 +7,7 @@ import com.madou.springbootinit.service.GemallCartService;
 import com.madou.springbootinit.mapper.GemallCartMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -64,12 +65,8 @@ public class GemallCartServiceImpl extends ServiceImpl<GemallCartMapper, GemallC
         queryWrapper.eq("user_id", userId);
         queryWrapper.in("product_id", productIds);
         GemallCart cart = new GemallCart();
-        if (isChecked) {
-            cart.setChecked(1);
-
-        } else {
-            cart.setChecked(0);
-        }
+        cart.setChecked(isChecked);
+        cart.setUpdateTime(LocalDateTime.now());
         this.update(cart, queryWrapper);
     }
 

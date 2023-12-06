@@ -45,7 +45,7 @@ public class GemallLog implements Serializable {
     /**
      * 操作状态
      */
-    private Integer status;
+    private Boolean status;
 
     /**
      * 操作结果，或者成功消息，或者失败消息
@@ -71,7 +71,7 @@ public class GemallLog implements Serializable {
      * 逻辑删除
      */
     @TableLogic
-    private Integer deleted;
+    private Boolean deleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
