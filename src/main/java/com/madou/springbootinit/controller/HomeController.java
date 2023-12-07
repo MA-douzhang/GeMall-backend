@@ -1,7 +1,7 @@
 package com.madou.springbootinit.controller;
 
 import com.madou.springbootinit.annotation.LoginUser;
-import com.madou.springbootinit.common.GrouponRuleService;
+import com.madou.springbootinit.service.common.GrouponRuleService;
 import com.madou.springbootinit.model.entity.GemallCategory;
 import com.madou.springbootinit.model.entity.GemallGoods;
 import com.madou.springbootinit.service.*;

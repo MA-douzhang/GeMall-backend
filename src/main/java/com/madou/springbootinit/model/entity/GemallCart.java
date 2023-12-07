@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.madou.springbootinit.mybatis.JsonStringArrayTypeHandler;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import com.baomidou.mybatisplus.annotation.*;
  * 购物车商品表
  * @TableName gemall_cart
  */
-@TableName(value ="gemall_cart")
+@TableName(value ="gemall_cart",autoResultMap = true)
 @Data
 public class GemallCart implements Serializable {
     /**
@@ -62,6 +63,7 @@ public class GemallCart implements Serializable {
     /**
      * 商品规格值列表，采用JSON数组格式
      */
+    @TableField(value = "specifications",typeHandler = JsonStringArrayTypeHandler.class)
     private String[] specifications;
 
     /**
@@ -77,7 +79,7 @@ public class GemallCart implements Serializable {
     /**
      * 创建时间
      */
-    private Date addTime;
+    private LocalDateTime addTime;
 
     /**
      * 更新时间

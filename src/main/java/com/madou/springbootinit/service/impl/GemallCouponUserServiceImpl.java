@@ -10,6 +10,7 @@ import com.madou.springbootinit.model.entity.GemallCouponUser;
 import com.madou.springbootinit.service.GemallCouponUserService;
 import com.madou.springbootinit.mapper.GemallCouponUserMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -39,9 +40,13 @@ public class GemallCouponUserServiceImpl extends ServiceImpl<GemallCouponUserMap
         } else {
             queryWrapper.orderByAsc(sort);
         }
-        Page<GemallCouponUser> page1 = new Page<>(page, limit);
-        IPage<GemallCouponUser> iPage = this.page(page1, queryWrapper);
-        return iPage.getRecords();
+        List<GemallCouponUser> list = this.list(queryWrapper);
+        if (!StringUtils.isEmpty(page)&&!StringUtils.isEmpty(limit)){
+            Page<GemallCouponUser> page1 = new Page<>(page, limit);
+            IPage<GemallCouponUser> iPage = this.page(page1, queryWrapper);
+            list=iPage.getRecords();
+        }
+        return list;
     }
 
     @Override

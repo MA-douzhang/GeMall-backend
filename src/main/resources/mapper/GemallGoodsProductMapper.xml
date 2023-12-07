@@ -9,7 +9,6 @@
         <result property="goodsId" column="goods_id" jdbcType="INTEGER"/>
         <result property="specifications" column="specifications" jdbcType="VARCHAR"
                 typeHandler="com.madou.springbootinit.mybatis.JsonStringArrayTypeHandler"/>
-
         <result property="price" column="price" jdbcType="DECIMAL"/>
         <result property="number" column="number" jdbcType="INTEGER"/>
         <result property="url" column="url" jdbcType="VARCHAR"/>

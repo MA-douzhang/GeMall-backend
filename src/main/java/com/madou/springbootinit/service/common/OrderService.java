@@ -351,7 +351,8 @@ public class OrderService {
         } else {
             order.setGrouponPrice(new BigDecimal(0));    //  团购价格
         }
-
+        order.setAddTime(LocalDateTime.now());
+        order.setUpdateTime(LocalDateTime.now());
         // 添加订单表项
         gemallOrderService.save(order);
         orderId = order.getId();
@@ -370,7 +371,8 @@ public class OrderService {
             orderGoods.setNumber(cartGoods.getNumber());
             orderGoods.setSpecifications(cartGoods.getSpecifications());
             orderGoods.setAddTime(LocalDateTime.now());
-
+            orderGoods.setAddTime(LocalDateTime.now());
+            orderGoods.setUpdateTime(LocalDateTime.now());
             orderGoodsService.save(orderGoods);
         }
 
@@ -451,7 +453,7 @@ public class OrderService {
 //                    groupon.setShareUrl(url);
 //                }
                 groupon.setStatus(GrouponConstant.STATUS_ON);
-                if (grouponService.updateById(groupon)) {
+                if (!grouponService.updateById(groupon)) {
                     throw new RuntimeException("更新数据已失效");
                 }
 

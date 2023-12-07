@@ -19,7 +19,6 @@ import java.util.Map;
  * <p>
  * 快递鸟即时查询API http://www.kdniao.com/api-track
  */
-@Component
 public class ExpressService {
 
     private final Log logger = LogFactory.getLog(ExpressService.class);

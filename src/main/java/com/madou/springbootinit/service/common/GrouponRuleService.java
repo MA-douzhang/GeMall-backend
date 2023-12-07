@@ -1,4 +1,4 @@
-package com.madou.springbootinit.common;
+package com.madou.springbootinit.service.common;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.madou.springbootinit.model.entity.GemallGoods;

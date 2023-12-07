@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.madou.springbootinit.mybatis.JsonStringArrayTypeHandler;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import com.baomidou.mybatisplus.annotation.*;
  * 订单商品表
  * @TableName gemall_order_goods
  */
-@TableName(value ="gemall_order_goods")
+@TableName(value ="gemall_order_goods",autoResultMap = true)
 @Data
 public class GemallOrderGoods implements Serializable {
     /**
@@ -62,6 +63,7 @@ public class GemallOrderGoods implements Serializable {
     /**
      * 商品货品的规格列表
      */
+    @TableField(value = "specifications",typeHandler = JsonStringArrayTypeHandler.class)
     private String[] specifications;
 
     /**

@@ -1,8 +1,11 @@
 package com.madou.springbootinit.mybatis;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.MappedJdbcTypes;
+import org.apache.ibatis.type.MappedTypes;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
@@ -12,6 +15,9 @@ import java.sql.SQLException;
 /*
    <columnOverride column="urls" javaType="java.lang.String[]" typeHandler="JsonStringArrayTypeHandler"/>
  */
+@Slf4j
+@MappedTypes(String[].class)
+@MappedJdbcTypes(JdbcType.VARCHAR)
 public class JsonStringArrayTypeHandler extends BaseTypeHandler<String[]> {
     private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -45,6 +51,7 @@ public class JsonStringArrayTypeHandler extends BaseTypeHandler<String[]> {
     }
 
     private String[] toObject(String content) {
+        log.debug("toObject===="+content);
         if (content != null && !content.isEmpty()) {
             try {
                 return (String[]) mapper.readValue(content, String[].class);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +69,7 @@ public class CartController {
         // 更好的效果应该是告知用户商品失效，允许用户点击按钮来清除失效商品。
         for (GemallCart cart : list) {
             GemallGoods goods = goodsService.getById(cart.getGoodsId());
-            if (goods == null || goods.getIsOnSale()) {
+            if (goods == null || !goods.getIsOnSale()) {
                 cartService.removeById(cart.getId());
                 log.debug("系统自动删除失效购物车商品 goodsId=" + cart.getGoodsId() + " productId=" + cart.getProductId());
             }
@@ -133,7 +134,7 @@ public class CartController {
 
         //判断商品是否可以购买
         GemallGoods goods = goodsService.getById(goodsId);
-        if (goods == null || goods.getIsOnSale()) {
+        if (goods == null || !goods.getIsOnSale()) {
             return ResponseUtil.fail(GOODS_UNSHELVE, "商品已下架");
         }
 
@@ -159,6 +160,8 @@ public class CartController {
             cart.setSpecifications(product.getSpecifications());
             cart.setUserId(userId);
             cart.setChecked(true);
+            cart.setAddTime(LocalDateTime.now());
+            cart.setUpdateTime(LocalDateTime.now());
             cartService.save(cart);
         } else {
             //取得规格的信息,判断规格库存
@@ -167,7 +170,7 @@ public class CartController {
                 return ResponseUtil.fail(GOODS_NO_STOCK, "库存不足");
             }
             existCart.setNumber(num);
-            if (cartService.updateById(existCart)) {
+            if (!cartService.updateById(existCart)) {
                 return ResponseUtil.updatedDataFailed();
             }
         }
@@ -207,7 +210,7 @@ public class CartController {
 
         //判断商品是否可以购买
         GemallGoods goods = goodsService.getById(goodsId);
-        if (goods == null || goods.getIsOnSale()) {
+        if (goods == null || !goods.getIsOnSale()) {
             return ResponseUtil.fail(GOODS_UNSHELVE, "商品已下架");
         }
 
@@ -233,6 +236,8 @@ public class CartController {
             cart.setSpecifications(product.getSpecifications());
             cart.setUserId(userId);
             cart.setChecked(true);
+            cart.setAddTime(LocalDateTime.now());
+            cart.setUpdateTime(LocalDateTime.now());
             cartService.save(cart);
         } else {
             //取得规格的信息,判断规格库存
@@ -241,7 +246,7 @@ public class CartController {
                 return ResponseUtil.fail(GOODS_NO_STOCK, "库存不足");
             }
             existCart.setNumber(num);
-            if (cartService.updateById(existCart)) {
+            if (!cartService.updateById(existCart)) {
                 return ResponseUtil.updatedDataFailed();
             }
         }
@@ -256,7 +261,7 @@ public class CartController {
      * @param cart   购物车商品信息， { id: xxx, goodsId: xxx, productId: xxx, number: xxx }
      * @return 修改结果
      */
-    @PostMapping("update")
+    @PostMapping("/update")
     public Object update(@LoginUser Integer userId, @RequestBody GemallCart cart) {
         if (userId == null) {
             return ResponseUtil.unlogin();
@@ -289,7 +294,7 @@ public class CartController {
 
         //判断商品是否可以购买
         GemallGoods goods = goodsService.getById(goodsId);
-        if (goods == null || goods.getIsOnSale()) {
+        if (goods == null || !goods.getIsOnSale()) {
             return ResponseUtil.fail(GOODS_UNSHELVE, "商品已下架");
         }
 
@@ -300,7 +305,7 @@ public class CartController {
         }
 
         existCart.setNumber(number);
-        if (cartService.updateById(existCart)) {
+        if (!cartService.updateById(existCart)) {
             return ResponseUtil.updatedDataFailed();
         }
         return ResponseUtil.ok();
@@ -408,7 +413,7 @@ public class CartController {
      *                  如果优惠券ID是空，则自动选择合适的优惠券。
      * @return 购物车操作结果
      */
-    @GetMapping("checkout")
+    @GetMapping("/checkout")
     public Object checkout(@LoginUser Integer userId, Integer cartId, Integer addressId, Integer couponId, Integer userCouponId, Integer grouponRulesId) {
         if (userId == null) {
             return ResponseUtil.unlogin();
@@ -462,7 +467,7 @@ public class CartController {
         }
 
         // 计算优惠券可用情况
-        BigDecimal tmpCouponPrice = new BigDecimal(0.00);
+        BigDecimal tmpCouponPrice = new BigDecimal("0.00");
         Integer tmpCouponId = 0;
         Integer tmpUserCouponId = 0;
         int tmpCouponLength = 0;

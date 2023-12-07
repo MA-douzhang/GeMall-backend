@@ -124,7 +124,7 @@ public class GemallOrderServiceImpl extends ServiceImpl<GemallOrderMapper, Gemal
         QueryWrapper<GemallOrder> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("user_id",userId);
         queryWrapper.eq("order_sn",orderSn);
-        return this.list().size();
+        return this.list(queryWrapper).size();
     }
 
 }

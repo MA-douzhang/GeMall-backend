@@ -215,7 +215,7 @@ public class AuthController {
         String encodedPassword = encoder.encode(password);
         user.setPassword(encodedPassword);
 
-        if (userService.updateById(user)) {
+        if (!userService.updateById(user)) {
             return ResponseUtil.updatedDataFailed();
         }
 
@@ -263,7 +263,7 @@ public class AuthController {
         }
 
         user.setMobile(mobile);
-        if (userService.updateById(user)) {
+        if (!userService.updateById(user)) {
             return ResponseUtil.updatedDataFailed();
         }
 
@@ -302,7 +302,7 @@ public class AuthController {
             user.setNickname(nickname);
         }
 
-        if (userService.updateById(user)) {
+        if (!userService.updateById(user)) {
             return ResponseUtil.updatedDataFailed();
         }
 
