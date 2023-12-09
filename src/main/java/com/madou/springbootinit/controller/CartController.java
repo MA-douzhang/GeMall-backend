@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.madou.springbootinit.constant.ResponseCode.GOODS_NO_STOCK;
 import static com.madou.springbootinit.constant.ResponseCode.GOODS_UNSHELVE;
@@ -528,6 +529,7 @@ public class CartController {
 
         BigDecimal actualPrice = orderTotalPrice.subtract(integralPrice);
 
+        List<Integer> idList = checkedGoodsList.stream().map(GemallCart::getId).collect(Collectors.toList());
         Map<String, Object> data = new HashMap<>();
         data.put("addressId", addressId);
         data.put("couponId", couponId);
@@ -543,6 +545,7 @@ public class CartController {
         data.put("orderTotalPrice", orderTotalPrice);
         data.put("actualPrice", actualPrice);
         data.put("checkedGoodsList", checkedGoodsList);
+        data.put("goodsIdList", idList);
         return ResponseUtil.ok(data);
     }
 }

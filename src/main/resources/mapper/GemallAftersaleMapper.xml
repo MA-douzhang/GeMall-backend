@@ -12,7 +12,7 @@
             <result property="type" column="type" jdbcType="SMALLINT"/>
             <result property="reason" column="reason" jdbcType="VARCHAR"/>
             <result property="amount" column="amount" jdbcType="DECIMAL"/>
-            <result property="pictures" column="pictures" jdbcType="VARCHAR"/>
+            <result property="pictures" column="pictures" jdbcType="VARCHAR" typeHandler="com.madou.springbootinit.mybatis.JsonStringArrayTypeHandler"/>
             <result property="comment" column="comment" jdbcType="VARCHAR"/>
             <result property="status" column="status" jdbcType="SMALLINT"/>
             <result property="handleTime" column="handle_time" jdbcType="TIMESTAMP"/>

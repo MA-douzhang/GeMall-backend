@@ -14,7 +14,7 @@
             <result property="addTime" column="add_time" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
             <result property="deleted" column="deleted" jdbcType="TINYINT"/>
-            <result property="roleIds" column="role_ids" jdbcType="VARCHAR"/>
+            <result property="roleIds" column="role_ids" jdbcType="VARCHAR" typeHandler="com.madou.springbootinit.mybatis.JsonIntegerArrayTypeHandler"/>
     </resultMap>
 
     <sql id="Base_Column_List">

@@ -218,7 +218,7 @@ public class OrderService {
         String message = JacksonUtil.parseString(body, "message");
         Integer grouponRulesId = JacksonUtil.parseInteger(body, "grouponRulesId");
         Integer grouponLinkId = JacksonUtil.parseInteger(body, "grouponLinkId");
-
+        List<Integer> goodsIdList = JacksonUtil.parseIntegerList(body,"goodsIdList");
         //如果是团购项目,验证活动是否有效
         if (grouponRulesId != null && grouponRulesId > 0) {
             GemallGrouponRules rules = grouponRulesService.getById(grouponRulesId);
@@ -376,11 +376,12 @@ public class OrderService {
             orderGoodsService.save(orderGoods);
         }
 
+
         // 删除购物车里面的商品信息
-        if (cartId.equals(0)) {
-            cartService.clearGoods(userId);
+        if (goodsIdList!=null&&goodsIdList.size()>0) {
+            cartService.removeBatchByIds(goodsIdList);
         } else {
-            cartService.removeById(cartId);
+            cartService.clearGoods(userId);
         }
 
         // 商品货品数量减少

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -184,7 +185,7 @@ public class GoodsController {
             data.put("attribute", goodsAttributeListTask.get());
             data.put("brand", brandCallableTask.get());
             data.put("groupon", grouponRulesCallableTask.get());
-            //SystemConfig.isAutoCreateShareImage()
+//            SystemConfig.isAutoCreateShareImage();
             data.put("share", SystemConfig.isAutoCreateShareImage());
 
         } catch (Exception e) {
@@ -260,6 +261,8 @@ public class GoodsController {
             searchHistoryVo.setKeyword(keyword);
             searchHistoryVo.setUserId(userId);
             searchHistoryVo.setFrom("wx");
+            searchHistoryVo.setAddTime(LocalDateTime.now());
+            searchHistoryVo.setUpdateTime(LocalDateTime.now());
             searchHistoryService.save(searchHistoryVo);
         }
 
