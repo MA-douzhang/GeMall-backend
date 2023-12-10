@@ -71,36 +71,39 @@ public class CouponVerifyService {
         // 检测商品是否符合
         Map<Integer, List<GemallCart>> cartMap = new HashMap<>();
         //可使用优惠券的商品或分类
-        List<Integer> goodsValueList = new ArrayList<>(Arrays.asList(coupon.getGoodsValue()));
-        Integer goodType = coupon.getGoodsType();
+        if(coupon.getGoodsValue()!=null){
+            List<Integer> goodsValueList = new ArrayList<>(Arrays.asList(coupon.getGoodsValue()));
+            Integer goodType = coupon.getGoodsType();
 
-        if (goodType.equals(CouponConstant.GOODS_TYPE_CATEGORY) ||
-                goodType.equals((CouponConstant.GOODS_TYPE_ARRAY))) {
-            for (GemallCart cart : cartList) {
-                Integer key = goodType.equals(CouponConstant.GOODS_TYPE_ARRAY) ? cart.getGoodsId() :
-                        goodsService.getById(cart.getGoodsId()).getCategoryId();
-                List<GemallCart> carts = cartMap.get(key);
-                if (carts == null) {
-                    carts = new LinkedList<>();
+            if (goodType.equals(CouponConstant.GOODS_TYPE_CATEGORY) ||
+                    goodType.equals((CouponConstant.GOODS_TYPE_ARRAY))) {
+                for (GemallCart cart : cartList) {
+                    Integer key = goodType.equals(CouponConstant.GOODS_TYPE_ARRAY) ? cart.getGoodsId() :
+                            goodsService.getById(cart.getGoodsId()).getCategoryId();
+                    List<GemallCart> carts = cartMap.get(key);
+                    if (carts == null) {
+                        carts = new LinkedList<>();
+                    }
+                    carts.add(cart);
+                    cartMap.put(key, carts);
                 }
-                carts.add(cart);
-                cartMap.put(key, carts);
-            }
-            //购物车中可以使用优惠券的商品或分类
-            goodsValueList.retainAll(cartMap.keySet());
-            //可使用优惠券的商品的总价格
-            BigDecimal total = new BigDecimal(0);
+                //购物车中可以使用优惠券的商品或分类
+                goodsValueList.retainAll(cartMap.keySet());
+                //可使用优惠券的商品的总价格
+                BigDecimal total = new BigDecimal(0);
 
-            for (Integer goodsId : goodsValueList) {
-                List<GemallCart> carts = cartMap.get(goodsId);
-                for (GemallCart cart : carts) {
-                    total = total.add(cart.getPrice().multiply(new BigDecimal(cart.getNumber())));
+                for (Integer goodsId : goodsValueList) {
+                    List<GemallCart> carts = cartMap.get(goodsId);
+                    for (GemallCart cart : carts) {
+                        total = total.add(cart.getPrice().multiply(new BigDecimal(cart.getNumber())));
+                    }
+                }
+                //是否达到优惠券满减金额
+                if (total.compareTo(coupon.getMin()) == -1) {
+                    return null;
                 }
             }
-            //是否达到优惠券满减金额
-            if (total.compareTo(coupon.getMin()) == -1) {
-                return null;
-            }
+
         }
 
         // 检测订单状态

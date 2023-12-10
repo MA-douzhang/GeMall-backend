@@ -60,7 +60,6 @@ public class GemallGoodsServiceImpl extends ServiceImpl<GemallGoodsMapper, Gemal
         Page<GemallGoods> page1 = new Page<>(page, limit);
         IPage<GemallGoods> iPage = this.page(page1, queryWrapper);
         return iPage.getRecords();
-
     }
 
     @Override

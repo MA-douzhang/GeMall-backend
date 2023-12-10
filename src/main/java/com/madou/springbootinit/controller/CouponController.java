@@ -237,6 +237,8 @@ public class CouponController {
             couponUser.setStartTime(now);
             couponUser.setEndTime(now.plusDays(coupon.getDays()));
         }
+        couponUser.setAddTime(LocalDateTime.now());
+        couponUser.setUpdateTime(LocalDateTime.now());
         couponUserService.save(couponUser);
 
         return ResponseUtil.ok();
@@ -316,6 +318,8 @@ public class CouponController {
             couponUser.setStartTime(now);
             couponUser.setEndTime(now.plusDays(coupon.getDays()));
         }
+        couponUser.setAddTime(LocalDateTime.now());
+        couponUser.setUpdateTime(LocalDateTime.now());
         couponUserService.save(couponUser);
 
         return ResponseUtil.ok();
