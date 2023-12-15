@@ -17,4 +17,16 @@ public interface GemallAdService extends IService<GemallAd> {
      * @return
      */
     List<GemallAd> queryIndex();
+
+    /**
+     * 查询广告
+     * @param name
+     * @param content
+     * @param page
+     * @param limit
+     * @param sort
+     * @param order
+     * @return
+     */
+    List<GemallAd> querySelective(String name, String content, Integer page, Integer limit, String sort, String order);
 }

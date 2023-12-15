@@ -54,4 +54,16 @@ public interface GemallAddressService extends IService<GemallAddress> {
      * @return
      */
     GemallAddress findDefault(Integer userId);
+
+    /**
+     * 管理-查询地址
+     * @param userId
+     * @param name
+     * @param page
+     * @param limit
+     * @param sort
+     * @param order
+     * @return
+     */
+    List<GemallAddress> querySelective(Integer userId, String name, Integer page, Integer limit, String sort, String order);
 }

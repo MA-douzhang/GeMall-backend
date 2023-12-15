@@ -1,16 +1,19 @@
 package com.madou.springbootinit.model.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.madou.springbootinit.mybatis.JsonIntegerArrayTypeHandler;
+import com.madou.springbootinit.mybatis.JsonStringArrayTypeHandler;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
  * 管理员表
  * @TableName gemall_admin
  */
-@TableName(value ="gemall_admin")
+@TableName(value ="gemall_admin",autoResultMap = true)
 @Data
 public class GemallAdmin implements Serializable {
     /**
@@ -37,7 +40,7 @@ public class GemallAdmin implements Serializable {
     /**
      * 最近一次登录时间
      */
-    private Date lastLoginTime;
+    private LocalDateTime lastLoginTime;
 
     /**
      * 头像图片
@@ -47,12 +50,12 @@ public class GemallAdmin implements Serializable {
     /**
      * 创建时间
      */
-    private Date addTime;
+    private LocalDateTime addTime;
 
     /**
      * 更新时间
      */
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 逻辑删除
@@ -63,7 +66,8 @@ public class GemallAdmin implements Serializable {
     /**
      * 角色列表
      */
-    private String roleIds;
+    @TableField(value = "role_ids",typeHandler = JsonIntegerArrayTypeHandler.class)
+    private Integer[] roleIds;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

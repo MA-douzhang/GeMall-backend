@@ -1,7 +1,11 @@
 package com.madou.springbootinit.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.madou.springbootinit.model.dto.gamallUser.GemallUserQueryRequest;
 import com.madou.springbootinit.model.entity.GemallUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.madou.springbootinit.model.vo.GemallUserVO;
 
 import java.util.List;
 
@@ -25,4 +29,13 @@ public interface GemallUserService extends IService<GemallUser> {
      * @return
      */
     List<GemallUser> queryByMobile(String mobile);
+
+    Page<GemallUserVO> getUserList(GemallUserQueryRequest queryRequest);
+
+    /**
+     * 用户查询条件
+     * @param queryRequest
+     * @return
+     */
+    QueryWrapper<GemallUser> getQueryWrapper(GemallUserQueryRequest queryRequest);
 }
