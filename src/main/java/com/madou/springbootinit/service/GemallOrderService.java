@@ -1,7 +1,10 @@
 package com.madou.springbootinit.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.madou.springbootinit.model.dto.adminOrder.GemallOrderQueryRequest;
 import com.madou.springbootinit.model.entity.GemallOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.madou.springbootinit.model.vo.GemallOrderVO;
 
 import java.util.List;
 
@@ -52,4 +55,11 @@ public interface GemallOrderService extends IService<GemallOrder> {
      * @return
      */
     int updateWithOptimisticLocker(GemallOrder order);
+
+    /**
+     * 管理-查询订单列表
+     * @param queryRequest
+     * @return
+     */
+    Page<GemallOrderVO> getList(GemallOrderQueryRequest queryRequest);
 }

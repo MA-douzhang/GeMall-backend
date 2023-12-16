@@ -2,18 +2,30 @@ package com.madou.springbootinit.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.madou.springbootinit.common.ErrorCode;
 import com.madou.springbootinit.constant.CommonConstant;
+import com.madou.springbootinit.exception.BusinessException;
+import com.madou.springbootinit.model.dto.adminAddress.GemallAddressQueryRequest;
+import com.madou.springbootinit.model.dto.gamallUser.GemallUserQueryRequest;
 import com.madou.springbootinit.model.entity.GemallAd;
 import com.madou.springbootinit.model.entity.GemallAddress;
+import com.madou.springbootinit.model.entity.GemallUser;
+import com.madou.springbootinit.model.vo.GemallAddressVO;
+import com.madou.springbootinit.model.vo.GemallUserVO;
 import com.madou.springbootinit.service.GemallAddressService;
 import com.madou.springbootinit.mapper.GemallAddressMapper;
+import com.madou.springbootinit.utils.SqlUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author MA_dou
@@ -95,6 +107,67 @@ public class GemallAddressServiceImpl extends ServiceImpl<GemallAddressMapper, G
         Page<GemallAddress> page1 = new Page<>(page, limit);
         IPage<GemallAddress> iPage = this.page(page1, queryWrapper);
         return iPage.getRecords();
+    }
+
+    @Override
+    public Page<GemallAddressVO> getList(GemallAddressQueryRequest queryRequest) {
+        long current = queryRequest.getCurrent();
+        long size = queryRequest.getPageSize();
+
+        Page<GemallAddress> page = page(new Page<>(current, size),
+                this.getQueryWrapper(queryRequest));
+        Page<GemallAddressVO> userVOPage = new Page<>(current, size, page.getTotal());
+        List<GemallAddressVO> userVO = getUserVO(page.getRecords());
+        userVOPage.setRecords(userVO);
+        return  userVOPage;
+    }
+    public GemallAddressVO getUserVO(GemallAddress address) {
+        if (address == null) {
+            return null;
+        }
+        GemallAddressVO addressVO = new GemallAddressVO();
+        BeanUtils.copyProperties(address, addressVO);
+        return addressVO;
+    }
+    /**
+     * 用户脱敏
+     * @param records
+     * @return
+     */
+    private List<GemallAddressVO> getUserVO(List<GemallAddress> records) {
+        if (CollectionUtils.isEmpty(records)) {
+            return new ArrayList<>();
+        }
+        return records.stream().map(this::getUserVO).collect(Collectors.toList());
+    }
+
+    public QueryWrapper<GemallAddress> getQueryWrapper(GemallAddressQueryRequest queryRequest) {
+
+        if (queryRequest == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR, "请求参数为空");
+        }
+        Integer id = queryRequest.getId();
+        String userName = queryRequest.getUsername();
+        String name = queryRequest.getName();
+        String province = queryRequest.getProvince();
+        String city = queryRequest.getCity();
+        String county = queryRequest.getCounty();
+        String tel = queryRequest.getTel();
+        Boolean isDefault = queryRequest.getIsDefault();
+        String sortField = queryRequest.getSortField();
+        String sortOrder = queryRequest.getSortOrder();
+
+        QueryWrapper<GemallAddress> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(id != null, "id", id);
+        queryWrapper.eq(isDefault!=null, "is_default", isDefault);
+        queryWrapper.like(org.apache.commons.lang3.StringUtils.isNotBlank(name), "name", name);
+        queryWrapper.like(org.apache.commons.lang3.StringUtils.isNotBlank(province), "province", province);
+        queryWrapper.like(org.apache.commons.lang3.StringUtils.isNotBlank(city), "city", city);
+        queryWrapper.like(org.apache.commons.lang3.StringUtils.isNotBlank(county), "county", county);
+        queryWrapper.like(org.apache.commons.lang3.StringUtils.isNotBlank(tel), "tel", tel);
+        queryWrapper.orderBy(SqlUtils.validSortField(sortField), sortOrder.equals(CommonConstant.SORT_ORDER_ASC),
+                sortField);
+        return queryWrapper;
     }
 }
 

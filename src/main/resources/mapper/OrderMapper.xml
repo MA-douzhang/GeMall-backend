@@ -171,4 +171,52 @@
             order by ${orderByClause}
         </if>
     </select>
+    <select id="getOrderVOPage" resultType="com.madou.springbootinit.model.vo.GemallOrderVO">
+        SELECT
+        o.id,
+        o.order_sn orderSn,
+        u.username username,
+        og.goods_name goodsName,
+        o.order_status orderStatus,
+        o.aftersale_status aftersaleStatus,
+        o.consignee,
+        o.mobile,
+        o.address,
+        o.message,
+        o.goods_price goodsPrice,
+        o.order_price orderPrice,
+        o.actual_price actualPrice,
+        o.ship_time shipTime,
+        o.confirm_time confirmTime,
+        o.end_time endTime,
+        o.add_time addTime,
+        o.update_time updateTime
+        FROM
+        gemall_order o
+        LEFT JOIN gemall_user u ON o.user_id = u.id
+        LEFT JOIN gemall_order_goods og ON o.id = og.order_id
+        LEFT JOIN gemall_goods g ON og.goods_id = g.id
+        <where>
+            o.deleted = 0
+            <if test="query.goodsName !=null and query.goodsName !='' ">
+                and og.goods_name like  concat('%',#{query.goodsName},'%')
+            </if>
+            <if test="query.orderSn !=null and query.orderSn !='' ">
+                and o.order_sn like  concat('%',#{query.orderSn},'%')
+            </if>
+            <if test="query.orderStatus !=null ">
+                and o.order_status = #{query.orderStatus}
+            </if>
+            <if test="query.aftersaleStatus !=null ">
+                and o.aftersale_status =#{query.aftersaleStatus}
+            </if>
+            <if test="query.consignee !=null and query.consignee !=''">
+                and o.consignee like  concat('%',#{query.consignee},'%')
+            </if>
+            <if test="query.address !=null and query.address !='' ">
+                and o.address like  concat('%',#{query.address},'%')
+            </if>
+        </where>
+    </select>
+
 </mapper>

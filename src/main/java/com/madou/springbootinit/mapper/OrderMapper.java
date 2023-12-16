@@ -1,6 +1,10 @@
 package com.madou.springbootinit.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.madou.springbootinit.model.dto.adminOrder.GemallOrderQueryRequest;
 import com.madou.springbootinit.model.entity.GemallOrder;
+import com.madou.springbootinit.model.vo.GemallOrderVO;
 import com.madou.springbootinit.model.vo.OrderVo;
 import org.apache.ibatis.annotations.Param;
 
@@ -14,4 +18,6 @@ public interface OrderMapper {
     List<Map> getOrderIds(@Param("query") String query, @Param("orderByClause") String orderByClause);
 
     List<OrderVo> getOrderList(@Param("query") String query, @Param("orderByClause") String orderByClause);
+
+    Page<GemallOrderVO> getOrderVOPage(@Param("query") GemallOrderQueryRequest queryRequest, IPage<GemallOrderVO> iPage);
 }

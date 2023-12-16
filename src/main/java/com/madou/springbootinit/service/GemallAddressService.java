@@ -1,7 +1,10 @@
 package com.madou.springbootinit.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.madou.springbootinit.model.dto.adminAddress.GemallAddressQueryRequest;
 import com.madou.springbootinit.model.entity.GemallAddress;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.madou.springbootinit.model.vo.GemallAddressVO;
 
 import java.util.List;
 
@@ -66,4 +69,11 @@ public interface GemallAddressService extends IService<GemallAddress> {
      * @return
      */
     List<GemallAddress> querySelective(Integer userId, String name, Integer page, Integer limit, String sort, String order);
+
+    /**
+     * 管理-查询地址列表
+     * @param queryRequest
+     * @return
+     */
+    Page<GemallAddressVO> getList(GemallAddressQueryRequest queryRequest);
 }

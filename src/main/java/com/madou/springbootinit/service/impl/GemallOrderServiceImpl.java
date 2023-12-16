@@ -2,14 +2,18 @@ package com.madou.springbootinit.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.madou.springbootinit.constant.CommonConstant;
-import com.madou.springbootinit.mapper.OrderMapper;
-import com.madou.springbootinit.model.entity.GemallOrder;
-import com.madou.springbootinit.service.GemallOrderService;
 import com.madou.springbootinit.mapper.GemallOrderMapper;
+import com.madou.springbootinit.mapper.OrderMapper;
+import com.madou.springbootinit.model.dto.adminOrder.GemallOrderQueryRequest;
+import com.madou.springbootinit.model.entity.GemallOrder;
+import com.madou.springbootinit.model.vo.GemallOrderVO;
+import com.madou.springbootinit.service.GemallOrderService;
 import com.madou.springbootinit.utils.OrderUtil;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -17,10 +21,8 @@ import javax.annotation.Resource;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author MA_dou
@@ -108,6 +110,37 @@ public class GemallOrderServiceImpl extends ServiceImpl<GemallOrderMapper, Gemal
         LocalDateTime preUpdateTime = order.getUpdateTime();
         order.setUpdateTime(LocalDateTime.now());
         return orderMapper.updateWithOptimisticLocker(preUpdateTime, order);
+    }
+
+    @Override
+    public Page<GemallOrderVO> getList(GemallOrderQueryRequest queryRequest) {
+
+        long current = queryRequest.getCurrent();
+        long size = queryRequest.getPageSize();
+        IPage<GemallOrderVO> iPage = new Page<>(current,size);
+        Page<GemallOrderVO> page = orderMapper.getOrderVOPage(queryRequest,iPage);
+        List<GemallOrderVO> orderVOS = getOrderVOList(page.getRecords());
+        page.setRecords(orderVOS);
+        return  page;
+    }
+    public GemallOrderVO getOrderVO(GemallOrderVO address) {
+        if (address == null) {
+            return null;
+        }
+        GemallOrderVO addressVO = new GemallOrderVO();
+        BeanUtils.copyProperties(address, addressVO);
+        return addressVO;
+    }
+    /**
+     * 用户脱敏
+     * @param records
+     * @return
+     */
+    private List<GemallOrderVO> getOrderVOList(List<GemallOrderVO> records) {
+        if (CollectionUtils.isEmpty(records)) {
+            return new ArrayList<>();
+        }
+        return records.stream().map(this::getOrderVO).collect(Collectors.toList());
     }
 
     private String getRandomNum(Integer num) {
