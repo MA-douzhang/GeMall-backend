@@ -93,7 +93,7 @@ public class AdminOrderController {
      * @return
      */
     @PostMapping("/delete")
-    public BaseResponse<Boolean> delete(@LoginUser Integer userId,@RequestBody DeleteRequest deleteRequest) {
+    public BaseResponse<Boolean> deleteOrder(@LoginUser Integer userId,@RequestBody DeleteRequest deleteRequest) {
         if (userId == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }

@@ -163,7 +163,7 @@ public class GemallOrderServiceImpl extends ServiceImpl<GemallOrderMapper, Gemal
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public Boolean delete(DeleteRequest deleteRequest) {
 
         Integer orderId = Math.toIntExact(deleteRequest.getId());

@@ -1,7 +1,11 @@
 package com.madou.springbootinit.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.madou.springbootinit.common.DeleteRequest;
+import com.madou.springbootinit.model.dto.adminGoods.GemallGoodsQueryRequest;
 import com.madou.springbootinit.model.entity.GemallGoods;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.madou.springbootinit.model.vo.GemallGoodsVO;
 
 import java.util.List;
 
@@ -83,4 +87,18 @@ public interface GemallGoodsService extends IService<GemallGoods> {
      * @return
      */
     List<GemallGoods> queryByCategory(List<Integer> catList, int offset, int limit);
+
+    /**
+     * 管理-查询分页商品
+     * @param queryRequest
+     * @return
+     */
+    Page<GemallGoodsVO> getList(GemallGoodsQueryRequest queryRequest);
+
+    /**
+     * 管理-删除商品
+     * @param deleteRequest
+     * @return
+     */
+    Boolean delete(DeleteRequest deleteRequest);
 }
