@@ -3,11 +3,13 @@ package com.madou.springbootinit.controller.admin;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.madou.springbootinit.annotation.LoginUser;
 import com.madou.springbootinit.common.BaseResponse;
+import com.madou.springbootinit.common.DeleteRequest;
 import com.madou.springbootinit.common.ErrorCode;
 import com.madou.springbootinit.common.ResultUtils;
 import com.madou.springbootinit.exception.BusinessException;
 import com.madou.springbootinit.model.dto.adminAddress.GemallAddressQueryRequest;
 import com.madou.springbootinit.model.dto.adminOrder.GemallOrderQueryRequest;
+import com.madou.springbootinit.model.dto.adminOrder.GemallOrderShipRequest;
 import com.madou.springbootinit.model.vo.AdminVendorsVO;
 import com.madou.springbootinit.model.vo.GemallAddressVO;
 import com.madou.springbootinit.model.vo.GemallOrderVO;
@@ -53,6 +55,20 @@ public class AdminOrderController {
         Page<GemallOrderVO> userVOList = gemallOrderService.getList(queryRequest);
         return ResultUtils.success(userVOList);
     }
+
+    /**
+     * 发货
+     * @param userId
+     * @param gemallOrderShipRequest
+     * @return
+     */
+    @PostMapping("/ship")
+    public BaseResponse<Boolean> ship(@LoginUser Integer userId,@RequestBody GemallOrderShipRequest gemallOrderShipRequest) {
+        if (userId == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+        }
+        return ResultUtils.success(gemallOrderService.ship(gemallOrderShipRequest));
+    }
     /**
      * 查询物流公司
      *
@@ -69,6 +85,19 @@ public class AdminOrderController {
             list.add(adminVendorsVO);
         }
         return ResultUtils.success(list);
+    }
+
+    /**
+     * 删除订单
+     * @param deleteRequest
+     * @return
+     */
+    @PostMapping("/delete")
+    public BaseResponse<Boolean> delete(@LoginUser Integer userId,@RequestBody DeleteRequest deleteRequest) {
+        if (userId == null) {
+            throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
+        }
+        return ResultUtils.success(gemallOrderService.delete(deleteRequest));
     }
 
 

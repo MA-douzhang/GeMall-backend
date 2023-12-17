@@ -25,4 +25,11 @@ public interface GemallOrderGoodsService extends IService<GemallOrderGoods> {
      * @return
      */
     Integer getComments(Integer orderId);
+
+    /**
+     * 根据订单id删除
+     * @param orderId
+     * @return
+     */
+    Boolean deleteByOrderId(Integer orderId);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
 import java.util.stream.Stream;
 
 /**
@@ -54,6 +55,8 @@ public class StorageService {
         storageInfo.setType(contentType);
         storageInfo.setKey(key);
         storageInfo.setUrl(url);
+        storageInfo.setAddTime(LocalDateTime.now());
+        storageInfo.setUpdateTime(LocalDateTime.now());
         gemallStorageService.save(storageInfo);
 
         return storageInfo;

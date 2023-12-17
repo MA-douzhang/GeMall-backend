@@ -18,9 +18,8 @@ public class GemallStorageServiceImpl extends ServiceImpl<GemallStorageMapper, G
 
     @Override
     public GemallStorage findByKey(String key) {
-
         QueryWrapper<GemallStorage> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("key", key);
+        queryWrapper.eq("`key`", key);
         return this.getOne(queryWrapper);
     }
 }

@@ -32,6 +32,13 @@ public class GemallOrderGoodsServiceImpl extends ServiceImpl<GemallOrderGoodsMap
         queryWrapper.eq("order_id", orderId);
         return this.list(queryWrapper).size();
     }
+
+    @Override
+    public Boolean deleteByOrderId(Integer orderId) {
+        QueryWrapper<GemallOrderGoods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("order_id", orderId);
+        return this.remove(queryWrapper);
+    }
 }
 
 

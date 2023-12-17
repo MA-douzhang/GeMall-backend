@@ -1,7 +1,10 @@
 package com.madou.springbootinit.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.madou.springbootinit.common.BaseResponse;
+import com.madou.springbootinit.common.DeleteRequest;
 import com.madou.springbootinit.model.dto.adminOrder.GemallOrderQueryRequest;
+import com.madou.springbootinit.model.dto.adminOrder.GemallOrderShipRequest;
 import com.madou.springbootinit.model.entity.GemallOrder;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.madou.springbootinit.model.vo.GemallOrderVO;
@@ -62,4 +65,19 @@ public interface GemallOrderService extends IService<GemallOrder> {
      * @return
      */
     Page<GemallOrderVO> getList(GemallOrderQueryRequest queryRequest);
+
+
+    /**
+     * 管理-发货
+     * @param gemallOrderShipRequest
+     * @return
+     */
+    Boolean ship(GemallOrderShipRequest gemallOrderShipRequest);
+
+    /**
+     * 管理-删除订单
+     * @param deleteRequest
+     * @return
+     */
+    Boolean delete(DeleteRequest deleteRequest);
 }

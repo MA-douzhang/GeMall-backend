@@ -122,7 +122,7 @@ public class GemallOrder implements Serializable {
     /**
      * 发货开始时间
      */
-    private Date shipTime;
+    private LocalDateTime shipTime;
 
     /**
      * 实际退款金额，（有可能退款金额小于实际支付金额）

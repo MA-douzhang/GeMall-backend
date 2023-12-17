@@ -48,7 +48,7 @@ public class StorageController {
     }
 
     @PostMapping("/upload")
-    public Object upload(@RequestParam("file") MultipartFile file) throws IOException {
+    public Object upload(@RequestPart("file") MultipartFile file) throws IOException {
         String originalFilename = file.getOriginalFilename();
         GemallStorage GemallStorage = storageService.store(file.getInputStream(), file.getSize(), file.getContentType(), originalFilename);
         return ResponseUtil.ok(GemallStorage);

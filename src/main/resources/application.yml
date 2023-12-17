@@ -89,4 +89,4 @@ storage:
   # 本地对象存储配置信息
   local:
     storagePath: storage
-    address: http://127.0.0.1:9090/storage/fetch/
+    address: http://127.0.0.1:9090/api/storage/fetch/

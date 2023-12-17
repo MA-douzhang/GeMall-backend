@@ -5,16 +5,22 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.madou.springbootinit.common.DeleteRequest;
+import com.madou.springbootinit.common.ErrorCode;
 import com.madou.springbootinit.constant.CommonConstant;
+import com.madou.springbootinit.exception.BusinessException;
 import com.madou.springbootinit.mapper.GemallOrderMapper;
 import com.madou.springbootinit.mapper.OrderMapper;
 import com.madou.springbootinit.model.dto.adminOrder.GemallOrderQueryRequest;
+import com.madou.springbootinit.model.dto.adminOrder.GemallOrderShipRequest;
 import com.madou.springbootinit.model.entity.GemallOrder;
 import com.madou.springbootinit.model.vo.GemallOrderVO;
+import com.madou.springbootinit.service.GemallOrderGoodsService;
 import com.madou.springbootinit.service.GemallOrderService;
 import com.madou.springbootinit.utils.OrderUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -35,6 +41,9 @@ public class GemallOrderServiceImpl extends ServiceImpl<GemallOrderMapper, Gemal
 
     @Resource
     private OrderMapper orderMapper;
+
+    @Resource
+    private GemallOrderGoodsService gemallOrderGoodsService;
     @Override
     public Object orderInfo(Integer userId) {
 
@@ -123,6 +132,60 @@ public class GemallOrderServiceImpl extends ServiceImpl<GemallOrderMapper, Gemal
         page.setRecords(orderVOS);
         return  page;
     }
+
+    @Override
+    public Boolean ship(GemallOrderShipRequest gemallOrderShipRequest) {
+
+        Integer orderId = gemallOrderShipRequest.getOrderId();
+        String shipSn = gemallOrderShipRequest.getShipSn();
+        String shipChannel = gemallOrderShipRequest.getShipChannel();
+        if (orderId == null || shipSn == null || shipChannel == null) {
+           throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        GemallOrder order = getById(orderId);
+        if (order == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+
+        // 如果订单不是已付款状态，则不能发货
+        if (!order.getOrderStatus().equals(OrderUtil.STATUS_PAY)) {
+            throw new BusinessException(ErrorCode.OPERATION_ERROR,"订单不能确认收货");
+        }
+
+        order.setOrderStatus(OrderUtil.STATUS_SHIP);
+        order.setShipSn(shipSn);
+        order.setShipChannel(shipChannel);
+        order.setShipTime(LocalDateTime.now());
+        if (updateWithOptimisticLocker(order) == 0) {
+            throw new BusinessException(ErrorCode.OPERATION_ERROR,"订单不能确认收货");
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional
+    public Boolean delete(DeleteRequest deleteRequest) {
+
+        Integer orderId = Math.toIntExact(deleteRequest.getId());
+        GemallOrder order = getById(orderId);
+        if (order == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+
+        // 如果订单不是关闭状态(已取消、系统取消、已退款、用户已确认、系统已确认)，则不能删除
+        Integer status = order.getOrderStatus();
+        if (!status.equals(OrderUtil.STATUS_CANCEL) && !status.equals(OrderUtil.STATUS_AUTO_CANCEL) &&
+                !status.equals(OrderUtil.STATUS_CONFIRM) &&!status.equals(OrderUtil.STATUS_AUTO_CONFIRM) &&
+                !status.equals(OrderUtil.STATUS_REFUND_CONFIRM)) {
+            throw new BusinessException(ErrorCode.OPERATION_ERROR,"订单不能删除");
+        }
+        // 删除订单
+        boolean orderResult = removeById(orderId);
+        // 删除订单商品
+        Boolean result = gemallOrderGoodsService.deleteByOrderId(orderId);
+        return orderResult==result;
+    }
+
     public GemallOrderVO getOrderVO(GemallOrderVO address) {
         if (address == null) {
             return null;
