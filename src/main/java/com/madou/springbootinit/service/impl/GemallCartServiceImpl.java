@@ -7,6 +7,7 @@ import com.madou.springbootinit.service.GemallCartService;
 import com.madou.springbootinit.mapper.GemallCartMapper;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -76,6 +77,18 @@ public class GemallCartServiceImpl extends ServiceImpl<GemallCartMapper, GemallC
         queryWrapper.eq("user_id", userId);
         queryWrapper.in("product_id", productIds);
         this.remove(queryWrapper);
+    }
+
+    @Override
+    public Boolean updateProduct(Integer id, String goodsSn, String name, BigDecimal price, String url) {
+
+        GemallCart cart = new GemallCart();
+        cart.setPrice(price);
+        cart.setPicUrl(url);
+        cart.setGoodsSn(goodsSn);
+        cart.setGoodsName(name);
+        cart.setId(id);
+        return updateById(cart);
     }
 }
 

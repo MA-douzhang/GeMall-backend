@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.*;
 /**
@@ -45,12 +46,12 @@ public class GemallGoodsSpecification implements Serializable {
     /**
      * 创建时间
      */
-    private Date addTime;
+    private LocalDateTime addTime;
 
     /**
      * 更新时间
      */
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * 逻辑删除

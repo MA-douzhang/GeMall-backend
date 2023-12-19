@@ -2,6 +2,7 @@ package com.madou.springbootinit.service;
 
 import com.madou.springbootinit.model.entity.GemallCategory;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.madou.springbootinit.model.vo.CatVO;
 
 import java.util.List;
 
@@ -46,4 +47,9 @@ public interface GemallCategoryService extends IService<GemallCategory> {
      */
     List<GemallCategory> queryL1WithoutRecommend(int offset,  int limit);
 
+    /**
+     * 管理-查询商品类别
+     * @return
+     */
+    List<CatVO> getCatList();
 }

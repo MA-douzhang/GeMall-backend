@@ -80,7 +80,7 @@ public class AdminUserController {
 
 
     @PostMapping("/list")
-    public BaseResponse<Page<GemallUserVO>> getUserList(@LoginUser Integer userId, @RequestBody GemallUserQueryRequest queryRequest) {
+    public BaseResponse<Page<GemallUserVO>> getUserList(@RequestBody GemallUserQueryRequest queryRequest,@LoginUser Integer userId) {
         if (userId == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }

@@ -5,11 +5,15 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.madou.springbootinit.model.entity.GemallCategory;
+import com.madou.springbootinit.model.vo.CatVO;
 import com.madou.springbootinit.service.GemallCategoryService;
 import com.madou.springbootinit.mapper.GemallCategoryMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author MA_dou
@@ -60,6 +64,35 @@ public class GemallCategoryServiceImpl extends ServiceImpl<GemallCategoryMapper,
         IPage<GemallCategory> iPage = this.page(page1, queryWrapper);
         return iPage.getRecords();
 
+    }
+
+    @Override
+    public List<CatVO> getCatList() {
+
+        // http://element-cn.eleme.io/#/zh-CN/component/cascader
+        // 管理员设置“所属分类”
+        List<GemallCategory> l1CatList = queryL1();
+        List<CatVO> categoryList = new ArrayList<>(l1CatList.size());
+
+        for (GemallCategory l1 : l1CatList) {
+            CatVO l1CatVO = new CatVO();
+            l1CatVO.setValue(l1.getId());
+            l1CatVO.setLabel(l1.getName());
+
+            List<GemallCategory> l2CatList = queryByPid(l1.getId());
+            List<CatVO> children = new ArrayList<>(l2CatList.size());
+            for (GemallCategory l2 : l2CatList) {
+                CatVO l2CatVO = new CatVO();
+                l2CatVO.setValue(l2.getId());
+                l2CatVO.setLabel(l2.getName());
+                children.add(l2CatVO);
+            }
+            l1CatVO.setChildren(children);
+
+            categoryList.add(l1CatVO);
+        }
+
+        return categoryList;
     }
 
 }

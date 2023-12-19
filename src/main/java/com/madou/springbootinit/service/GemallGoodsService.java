@@ -2,9 +2,12 @@ package com.madou.springbootinit.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.madou.springbootinit.common.DeleteRequest;
+import com.madou.springbootinit.model.dto.adminGoods.GemallGoodsAddRequest;
 import com.madou.springbootinit.model.dto.adminGoods.GemallGoodsQueryRequest;
 import com.madou.springbootinit.model.entity.GemallGoods;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.madou.springbootinit.model.vo.AdminGoodsVO;
+import com.madou.springbootinit.model.vo.CatVO;
 import com.madou.springbootinit.model.vo.GemallGoodsVO;
 
 import java.util.List;
@@ -101,4 +104,25 @@ public interface GemallGoodsService extends IService<GemallGoods> {
      * @return
      */
     Boolean delete(DeleteRequest deleteRequest);
+
+    /**
+     * 管理-添加商品
+     * @param goodsAllinone
+     * @return
+     */
+    Boolean createGoods(GemallGoodsAddRequest goodsAllinone);
+
+    /**
+     * 管理-更新商品
+     * @param goodsAllinone
+     * @return
+     */
+    Boolean updateGoods(GemallGoodsAddRequest goodsAllinone);
+
+    /**
+     * 管理-获取商品信息
+     * @param id
+     * @return
+     */
+    AdminGoodsVO detailGoods(Integer id);
 }

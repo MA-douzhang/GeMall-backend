@@ -49,7 +49,7 @@ public class GemallGoodsSpecificationServiceImpl extends ServiceImpl<GemallGoods
         return specificationVoList;
     }
 
-    private List<GemallGoodsSpecification> queryByGid(Integer id) {
+    public List<GemallGoodsSpecification> queryByGid(Integer id) {
         QueryWrapper<GemallGoodsSpecification> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("goods_id", id);
         return this.list(queryWrapper);

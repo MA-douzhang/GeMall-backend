@@ -44,7 +44,7 @@ public class AdminAddressController {
      * @return
      */
     @PostMapping("/list")
-    public BaseResponse<Page<GemallAddressVO>> getAddressList(@LoginUser Integer userId, @RequestBody GemallAddressQueryRequest queryRequest) {
+    public BaseResponse<Page<GemallAddressVO>> getAddressList(@RequestBody GemallAddressQueryRequest queryRequest,@LoginUser Integer userId) {
         if (userId == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }

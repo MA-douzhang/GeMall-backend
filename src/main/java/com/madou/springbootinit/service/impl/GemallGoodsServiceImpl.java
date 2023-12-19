@@ -10,16 +10,16 @@ import com.madou.springbootinit.common.ErrorCode;
 import com.madou.springbootinit.constant.CommonConstant;
 import com.madou.springbootinit.exception.BusinessException;
 import com.madou.springbootinit.mapper.GemallGoodsMapper;
+import com.madou.springbootinit.model.dto.adminGoods.GemallGoodsAddRequest;
 import com.madou.springbootinit.model.dto.adminGoods.GemallGoodsQueryRequest;
 import com.madou.springbootinit.model.dto.gamallUser.GemallUserQueryRequest;
-import com.madou.springbootinit.model.entity.GemallGoods;
-import com.madou.springbootinit.model.entity.GemallUser;
+import com.madou.springbootinit.model.entity.*;
+import com.madou.springbootinit.model.vo.AdminGoodsVO;
+import com.madou.springbootinit.model.vo.CatVO;
 import com.madou.springbootinit.model.vo.GemallGoodsVO;
 import com.madou.springbootinit.model.vo.GemallUserVO;
-import com.madou.springbootinit.service.GemallGoodsAttributeService;
-import com.madou.springbootinit.service.GemallGoodsProductService;
-import com.madou.springbootinit.service.GemallGoodsService;
-import com.madou.springbootinit.service.GemallGoodsSpecificationService;
+import com.madou.springbootinit.service.*;
+import com.madou.springbootinit.utils.ResponseUtil;
 import com.madou.springbootinit.utils.SqlUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -27,8 +27,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -45,6 +49,10 @@ public class GemallGoodsServiceImpl extends ServiceImpl<GemallGoodsMapper, Gemal
     private GemallGoodsAttributeService attributeService;
     @Resource
     private GemallGoodsProductService productService;
+    @Resource
+    private GemallCategoryService gemallCategoryService;
+    @Resource
+    private GemallCartService gemallCartService;
     @Override
     public GemallGoods findByIdVO(Integer i) {
 
@@ -191,6 +199,160 @@ public class GemallGoodsServiceImpl extends ServiceImpl<GemallGoodsMapper, Gemal
         boolean remove4 = productService.removeById(id);
         return remove1&&remove2&&remove3&&remove4;
     }
+
+    @Override
+    public Boolean createGoods(GemallGoodsAddRequest goodsAllinone) {
+        if (goodsAllinone==null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+
+        GemallGoods goods = goodsAllinone.getGoods();
+        GemallGoodsAttribute[] attributes = goodsAllinone.getAttributes();
+        GemallGoodsSpecification[] specifications = goodsAllinone.getSpecifications();
+        GemallGoodsProduct[] products = goodsAllinone.getProducts();
+
+        String name = goods.getName();
+        QueryWrapper<GemallGoods> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("name",name);
+        GemallGoods one = this.getOne(queryWrapper);
+        if (one!=null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR,"该商品名称已经存在");
+        }
+
+        // 商品表里面有一个字段retailPrice记录当前商品的最低价
+        BigDecimal retailPrice = new BigDecimal(Integer.MAX_VALUE);
+        for (GemallGoodsProduct product : products) {
+            BigDecimal productPrice = product.getPrice();
+            if(retailPrice.compareTo(productPrice) == 1){
+                retailPrice = productPrice;
+            }
+        }
+        goods.setRetailPrice(retailPrice);
+
+        // 商品基本信息表gmall_goods
+        goods.setAddTime(LocalDateTime.now());
+        goods.setUpdateTime(LocalDateTime.now());
+        goods.setDetail("");
+        goods.setShareUrl("");
+        boolean save = save(goods);
+        if (!save){
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,"商品保存失败");
+        }
+
+        // 商品规格表litemall_goods_specification
+        for (GemallGoodsSpecification specification : specifications) {
+            specification.setGoodsId(goods.getId());
+            specification.setAddTime(LocalDateTime.now());
+            specification.setUpdateTime(LocalDateTime.now());
+            specificationService.save(specification);
+        }
+
+        // 商品参数表litemall_goods_attribute
+        for (GemallGoodsAttribute attribute : attributes) {
+            attribute.setGoodsId(goods.getId());
+            attribute.setAddTime(LocalDateTime.now());
+            attribute.setUpdateTime(LocalDateTime.now());
+            attributeService.save(attribute);
+        }
+
+        // 商品货品表litemall_product
+        for (GemallGoodsProduct product : products) {
+            product.setGoodsId(goods.getId());
+            product.setAddTime(LocalDateTime.now());
+            product.setUpdateTime(LocalDateTime.now());
+            productService.save(product);
+        }
+        return true;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean updateGoods(GemallGoodsAddRequest goodsAllinone) {
+
+        if (goodsAllinone==null){
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+
+        GemallGoods goods = goodsAllinone.getGoods();
+        GemallGoodsAttribute[] attributes = goodsAllinone.getAttributes();
+        GemallGoodsSpecification[] specifications = goodsAllinone.getSpecifications();
+        GemallGoodsProduct[] products = goodsAllinone.getProducts();
+
+
+        // 商品表里面有一个字段retailPrice记录当前商品的最低价
+        BigDecimal retailPrice = new BigDecimal(Integer.MAX_VALUE);
+        for (GemallGoodsProduct product : products) {
+            BigDecimal productPrice = product.getPrice();
+            if(retailPrice.compareTo(productPrice) == 1){
+                retailPrice = productPrice;
+            }
+        }
+        goods.setRetailPrice(retailPrice);
+        goods.setUpdateTime(LocalDateTime.now());
+        // 商品基本信息表litemall_goods
+        if (!updateById(goods)) {
+            throw new BusinessException(ErrorCode.SYSTEM_ERROR,"商品更新失败");
+        }
+
+        // 商品规格表litemall_goods_specification
+        for (GemallGoodsSpecification specification : specifications) {
+                specification.setSpecification(null);
+                specification.setValue(null);
+                specification.setUpdateTime(LocalDateTime.now());
+                specificationService.updateById(specification);
+        }
+
+        // 商品参数表litemall_goods_attribute
+        for (GemallGoodsAttribute attribute : attributes) {
+            if (attribute.getId() == null || attribute.getId().equals(0)){
+                attribute.setGoodsId(goods.getId());
+                attribute.setAddTime(LocalDateTime.now());
+                attribute.setUpdateTime(LocalDateTime.now());
+                attributeService.save(attribute);
+            }
+            else{
+                attribute.setUpdateTime(LocalDateTime.now());
+                attributeService.updateById(attribute);
+            }
+        }
+
+        // 商品货品表litemall_product
+        for (GemallGoodsProduct product : products) {
+                product.setUpdateTime(LocalDateTime.now());
+                productService.updateById(product);
+
+        }
+        for (GemallGoodsProduct product : products) {
+            gemallCartService.updateProduct(product.getId(), goods.getGoodsSn(), goods.getName(), product.getPrice(), product.getUrl());
+        }
+        return true;
+    }
+
+    @Override
+    public AdminGoodsVO detailGoods(Integer id) {
+        GemallGoods goods = getById(id);
+        List<GemallGoodsProduct> products = productService.queryByGid(id);
+        List<GemallGoodsSpecification> specifications = specificationService.queryByGid(id);
+        List<GemallGoodsAttribute> attributes = attributeService.queryByGid(id);
+
+        Integer categoryId = goods.getCategoryId();
+        GemallCategory category = gemallCategoryService.getById(categoryId);
+        Integer[] categoryIds = new Integer[]{};
+        if (category != null) {
+            Integer parentCategoryId = category.getPid();
+            categoryIds = new Integer[]{parentCategoryId, categoryId};
+        }
+        AdminGoodsVO adminGoodsVO = new AdminGoodsVO();
+        adminGoodsVO.setGoods(goods);
+        adminGoodsVO.setAttributes(attributes);
+        adminGoodsVO.setProducts(products);
+        adminGoodsVO.setSpecifications(specifications);
+        adminGoodsVO.setCategoryIds(categoryIds);
+
+
+        return adminGoodsVO;
+    }
+
 
     public GemallGoodsVO gemallGoodsVO(GemallGoods user) {
         if (user == null) {

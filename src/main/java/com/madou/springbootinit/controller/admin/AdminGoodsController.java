@@ -7,17 +7,21 @@ import com.madou.springbootinit.common.DeleteRequest;
 import com.madou.springbootinit.common.ErrorCode;
 import com.madou.springbootinit.common.ResultUtils;
 import com.madou.springbootinit.exception.BusinessException;
+import com.madou.springbootinit.model.dto.adminGoods.GemallGoodsAddRequest;
 import com.madou.springbootinit.model.dto.adminGoods.GemallGoodsQueryRequest;
+import com.madou.springbootinit.model.vo.AdminGoodsVO;
+import com.madou.springbootinit.model.vo.CatVO;
 import com.madou.springbootinit.model.vo.GemallGoodsVO;
+import com.madou.springbootinit.service.GemallCartService;
+import com.madou.springbootinit.service.GemallCategoryService;
 import com.madou.springbootinit.service.GemallGoodsService;
 import com.madou.springbootinit.service.common.ExpressService;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * 管理端-商品管理
@@ -32,6 +36,9 @@ public class AdminGoodsController {
     @Resource
     private ExpressService expressService;
 
+    @Resource
+    private GemallCategoryService gemallCategoryService;
+
     /**
      * 查询商品列表
      * @param userId
@@ -39,7 +46,7 @@ public class AdminGoodsController {
      * @return
      */
     @PostMapping("/list")
-    public BaseResponse<Page<GemallGoodsVO>> getGoodsList(@LoginUser Integer userId, @RequestBody GemallGoodsQueryRequest queryRequest) {
+    public BaseResponse<Page<GemallGoodsVO>> getGoodsList( @RequestBody GemallGoodsQueryRequest queryRequest,@LoginUser Integer userId) {
         if (userId == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }
@@ -50,19 +57,56 @@ public class AdminGoodsController {
         return ResultUtils.success(list);
     }
 
+    /**
+     * 添加商品
+     *
+     * @param goodsAllinone
+     * @return
+     */
+    @PostMapping("/create")
+    public BaseResponse<Boolean> createGoods(@RequestBody GemallGoodsAddRequest goodsAllinone) {
+        return ResultUtils.success(gemallGoodsService.createGoods(goodsAllinone));
+    }
+    /**
+     * 编辑商品
+     *
+     * @param goodsAllinone
+     * @return
+     */
+    @PostMapping("/update")
+    public BaseResponse<Boolean> update(@RequestBody GemallGoodsAddRequest goodsAllinone) {
+        return ResultUtils.success(gemallGoodsService.updateGoods(goodsAllinone));
+    }
+    /**
+     * 商品详情
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/detail")
+    public BaseResponse<AdminGoodsVO> detail(Integer id) {
+        return ResultUtils.success(gemallGoodsService.detailGoods(id));
 
+    }
     /**
      * 删除商品
      * @param deleteRequest
      * @return
      */
     @PostMapping("/delete")
-    public BaseResponse<Boolean> deleteGoods(@LoginUser Integer userId,@RequestBody DeleteRequest deleteRequest) {
+    public BaseResponse<Boolean> deleteGoods(@RequestBody DeleteRequest deleteRequest,@LoginUser Integer userId) {
         if (userId == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }
         return ResultUtils.success(gemallGoodsService.delete(deleteRequest));
     }
 
-
+    /**
+     * 商品类别
+     * @return
+     */
+    @GetMapping("/catAndBrand")
+    public  BaseResponse<List<CatVO>> getCatList() {
+        return ResultUtils.success(gemallCategoryService.getCatList());
+    }
 }

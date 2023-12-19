@@ -45,7 +45,7 @@ public class AdminOrderController {
      * @return
      */
     @PostMapping("/list")
-    public BaseResponse<Page<GemallOrderVO>> getOrderList(@LoginUser Integer userId, @RequestBody GemallOrderQueryRequest queryRequest) {
+    public BaseResponse<Page<GemallOrderVO>> getOrderList( @RequestBody GemallOrderQueryRequest queryRequest,@LoginUser Integer userId) {
         if (userId == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }
@@ -63,7 +63,7 @@ public class AdminOrderController {
      * @return
      */
     @PostMapping("/ship")
-    public BaseResponse<Boolean> ship(@LoginUser Integer userId,@RequestBody GemallOrderShipRequest gemallOrderShipRequest) {
+    public BaseResponse<Boolean> ship(@RequestBody GemallOrderShipRequest gemallOrderShipRequest,@LoginUser Integer userId) {
         if (userId == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }
@@ -93,7 +93,7 @@ public class AdminOrderController {
      * @return
      */
     @PostMapping("/delete")
-    public BaseResponse<Boolean> deleteOrder(@LoginUser Integer userId,@RequestBody DeleteRequest deleteRequest) {
+    public BaseResponse<Boolean> deleteOrder(@RequestBody DeleteRequest deleteRequest,@LoginUser Integer userId) {
         if (userId == null) {
             throw new BusinessException(ErrorCode.NOT_LOGIN_ERROR);
         }

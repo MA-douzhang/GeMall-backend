@@ -2,7 +2,9 @@ package com.madou.springbootinit.service;
 
 import com.madou.springbootinit.model.entity.GemallCart;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.madou.springbootinit.model.vo.CatVO;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -63,4 +65,15 @@ public interface GemallCartService extends IService<GemallCart> {
      * @param userId
      */
     void delete(List<Integer> productIds, Integer userId);
+
+    /**
+     * 管理-更新购物车信息
+     * @param id
+     * @param goodsSn
+     * @param name
+     * @param price
+     * @param url
+     * @return
+     */
+    Boolean updateProduct(Integer id, String goodsSn, String name, BigDecimal price, String url);
 }
