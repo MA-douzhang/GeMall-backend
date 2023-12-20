@@ -8,6 +8,13 @@ Gemall：
 
 后端：SpringBoot
 
+## 项目地址
+
+* [Gemall-backend 后端](https://github.com/MA-douzhang/GeMall-backend)
+* [Gemall-frontend 前端管理](https://github.com/MA-douzhang/Gemall-frontend)
+* [GeTeamBuy 移动端](https://github.com/MA-douzhang/GeTeamBuy)
+
+
 ## 借鉴项目
 * [litemall项目](https://github.com/linlinjava/litemall)
 * [new_flutter_mallprovider项目](https://github.com/lotawei/new_flutter_mallprovider)
