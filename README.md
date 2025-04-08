@@ -7,7 +7,8 @@ Gemall：
 前端：Vue + Arco design pro框架开发
 
 后端：SpringBoot
-
+# 前言
+该项目有完整论文，如有需要请添加WX号：wozuisuainizuichou
 ## 项目地址
 
 * [Gemall-backend 后端](https://github.com/MA-douzhang/GeMall-backend)
